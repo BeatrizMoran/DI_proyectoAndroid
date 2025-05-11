@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.registroseries.databinding.FragmentFirstBinding
 import com.example.registroseries.databinding.FragmentSeriesListBinding
+import com.example.registroseries.recyclerView.Adaptador
 
 
 class SeriesListFragment : Fragment() {
@@ -30,8 +32,8 @@ class SeriesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-    }
+        binding.tfrvSeries.layoutManager=LinearLayoutManager(activity as MainActivity)
+        binding.tfrvSeries.adapter= Adaptador((activity as MainActivity).series)    }
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -1,5 +1,6 @@
 package com.example.registroseries
 
+import android.graphics.Insets.add
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
@@ -11,16 +12,23 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.core.content.ContextCompat
 import com.example.registroseries.databinding.ActivityMainBinding
+import com.example.registroseries.modelo.Serie
+import java.util.Calendar
+import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
+    var series: MutableList<Serie> = mutableListOf()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
 
+        generarSeries()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -35,6 +43,54 @@ class MainActivity : AppCompatActivity() {
                 .setAction("Action", null)
                 .setAnchorView(R.id.fab).show()
         }*/
+    }
+
+    fun generarSeries(): List<Serie> {
+
+        val titulos = listOf("Breaking Bad", "Stranger Things", "Game of Thrones", "The Witcher", "The Office")
+        val generos = listOf("Drama", "Comedia", "Ciencia Ficción", "Acción", "Terror")
+        val estadosUsuario = listOf("Viendo", "Completada", "Pendiente", "Abandonada")
+        val imagenesUrl = listOf(
+            "https://link_imagen_1.jpg",
+            "https://link_imagen_2.jpg",
+            "https://link_imagen_3.jpg",
+            "https://link_imagen_4.jpg",
+            "https://link_imagen_5.jpg"
+        )
+
+        // Generar 5 series como ejemplo
+        for (i in 1..5) {
+            val titulo = titulos.random()
+            val genero = generos.random()
+            val temporadaActual = Random.nextInt(1, 10)  // Entre 1 y 9 temporadas
+            val captituloActual = Random.nextInt(1, 12) // Entre 1 y 11 capítulos
+            val puntuacion = Random.nextDouble(1.0, 10.0) // Entre 1.0 y 10.0
+            val estadoUsuario = estadosUsuario.random()
+            val serieFinalizada = estadoUsuario == "Completada"
+            val notas = "Notas sobre la serie $titulo"
+            val imagenUrl = imagenesUrl.random()
+
+            val fechaProximoEstreno = Calendar.getInstance().apply {
+                add(Calendar.MONTH, Random.nextInt(1, 6)) // Proximo estreno entre 1 y 6 meses
+            }.time
+
+            val serie = Serie(
+                titulo = titulo,
+                genero = genero,
+                temporadaActual = temporadaActual,
+                captituloActual = captituloActual,
+                puntuacion = puntuacion,
+                fecha_proximo_estreno = fechaProximoEstreno,
+                estado_usuario = estadoUsuario,
+                serie_finalizada = serieFinalizada,
+                notas = notas,
+                imagen_url = imagenUrl
+            )
+
+            series.add(serie)
+        }
+
+        return series
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
