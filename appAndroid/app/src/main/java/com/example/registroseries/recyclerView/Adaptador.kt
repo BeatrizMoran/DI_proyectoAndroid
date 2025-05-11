@@ -10,6 +10,7 @@ import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.registroseries.R
 import com.example.registroseries.databinding.ItemSerieBinding
 import com.example.registroseries.modelo.Serie
 
@@ -18,6 +19,19 @@ import com.example.registroseries.modelo.Serie
 class Adaptador(val series:MutableList<Serie>): RecyclerView.Adapter<Adaptador.SerieVH>(){
     //El ViewHolder es la clase de cada uno de los contenedores
     inner class SerieVH (val binding: ItemSerieBinding): RecyclerView.ViewHolder(binding.root){
+        var posicion: Int = 0
+        init {
+
+            binding.isbVerInfo.setOnClickListener {
+                val bundle = Bundle().apply {
+                    putString("titulo", series[posicion].titulo)
+                }
+
+                binding.rviClPrincipal.findNavController()
+                    .navigate(R.id.action_seriesListFragment_to_serieDetailFragment, bundle)
+            }
+
+        }
     }
     //captura la vista que hemos creado (recyclerview_item) y crea una instancia del viewholder
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SerieVH {
@@ -30,6 +44,9 @@ class Adaptador(val series:MutableList<Serie>): RecyclerView.Adapter<Adaptador.S
         holder.binding.tvisTituloSerie.text = serie.titulo
         holder.binding.tvisCategoriaSerie.text = serie.genero
         holder.binding.tvisEstadoSerie.text = serie.estado_usuario
+
+        holder.posicion = position
+
 
 
     }

@@ -17,5 +17,14 @@
         android:id="@+id/seriesListFragment"
         android:name="com.example.registroseries.SeriesListFragment"
         android:label="fragment_series_list"
-        tools:layout="@layout/fragment_series_list" />
+        tools:layout="@layout/fragment_series_list" >
+        <action
+            android:id="@+id/action_seriesListFragment_to_serieDetailFragment"
+            app:destination="@id/serieDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/serieDetailFragment"
+        android:name="com.example.registroseries.SerieDetailFragment"
+        android:label="fragment_serie_detail"
+        tools:layout="@layout/fragment_serie_detail" />
 </navigation>

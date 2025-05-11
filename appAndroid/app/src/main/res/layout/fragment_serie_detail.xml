@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/serieDetailLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".SerieDetailFragment">
+
+    <!-- Botones superiores -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="16dp">
+
+        <!-- Botón Volver alineado a la izquierda -->
+        <Button
+            android:id="@+id/sdfbVolver"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:drawableLeft="@drawable/ic_volver"
+            android:padding="9dp"
+            android:text=" "
+            app:backgroundTint="@color/grisClaro"
+             />
+
+        <!-- Espaciador flexible -->
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/sdfbEditar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:drawableTop="@drawable/ic_edit"
+            android:text=""
+            android:gravity="center"
+            android:padding="8dp"
+            android:layout_marginEnd="10dp"
+            app:backgroundTint="@color/rojo" />
+
+        <Button
+            android:id="@+id/sdfbBorrar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:drawableTop="@drawable/ic_clear"
+            android:text=""
+            android:gravity="center"
+            android:padding="8dp"
+            app:backgroundTint="@color/rojo" />
+
+    </LinearLayout>
+
+    <!-- Imagen y título -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/sdfivImagenSerie"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_weight="1"
+            android:scaleType="centerCrop"
+            android:src="@drawable/serie_default_image" />
+
+        <TextView
+            android:id="@+id/sdftvTituloSerie"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:paddingStart="12dp"
+            android:text="Nombre de la Serie"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/sdftvCategoriaSerie"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="Categoria: "
+            android:textStyle="bold"/>
+
+
+        <TextView
+            android:id="@+id/sdftvCalificacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+
+            android:text="Calificacion: "
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/sdftvEstadoUsuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Estado del usuario: "
+            android:layout_margin="8dp"
+
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/sdftvEstadoSerie"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+
+            android:text="Estado de la serie: "
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/sdftvFechaProximoEstreno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="Fecha proximo estreno: "
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/sdftvTemporadaActual"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="Temporada actual: "
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/sdftvEpisodioActual"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="Episodio actual: "
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/sdftvNotasPersonales"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="Notas personales: "
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+
+</LinearLayout>
