@@ -1,5 +1,7 @@
 package com.example.registroseries
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Insets.add
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
@@ -10,9 +12,12 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.example.registroseries.databinding.ActivityMainBinding
+import com.example.registroseries.modelo.LoginVM
 import com.example.registroseries.modelo.Serie
+import com.example.registroseries.modelo.SignUpVM
 import java.util.Calendar
 import kotlin.random.Random
 
@@ -23,10 +28,18 @@ class MainActivity : AppCompatActivity() {
 
     var series: MutableList<Serie> = mutableListOf()
 
+    val loginVM:LoginVM by viewModels()
+    val signUpVM: SignUpVM by viewModels()
+
+
+    //usuario con sharedPreferences
+    lateinit var usuario:SharedPreferences
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        //usuario = this.getSharedPreferences("usuario",Context.MODE_PRIVATE)
 
         generarSeries()
         binding = ActivityMainBinding.inflate(layoutInflater)

@@ -52,4 +52,9 @@
     <string name="categoria_serie">Categoria Serie</string>
     <string name="estado_serie">Estado serie</string>
     <string name="volver" />
+    <string name="nombre">Nombre</string>
+    <string name="apellidos">Apellidos</string>
+    <string name="repite_la_contrase_a">Repite la contraseña</string>
+    <string name="registrarme">Registrarme</string>
+    <string name="mensaje_de_exito">Mensaje de exito</string>
 </resources>

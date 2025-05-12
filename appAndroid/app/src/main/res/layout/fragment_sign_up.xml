@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignUpFragment">
+
+    <LinearLayout
+        android:id="@+id/formContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <EditText
+            android:id="@+id/suftvNombre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/rojo"
+            android:ems="10"
+            android:layout_marginBottom="20dp"
+
+            android:hint="@string/nombre"
+            android:inputType="text"
+            android:layout_marginTop="16dp"
+            android:tag="Nombre" />
+
+        <EditText
+            android:id="@+id/suftvApellidos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/rojo"
+            android:ems="10"
+            android:layout_marginBottom="20dp"
+            android:hint="@string/apellidos"
+            android:inputType="text"
+            android:layout_marginTop="16dp"
+            android:tag="Apellidos"/>
+
+        <EditText
+            android:id="@+id/suftvEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/rojo"
+            android:ems="10"
+            android:layout_marginBottom="20dp"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:layout_marginTop="16dp"
+            android:tag="Email"/>
+
+        <EditText
+            android:id="@+id/suftvPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/rojo"
+            android:ems="10"
+            android:layout_marginBottom="20dp"
+            android:hint="@string/contrase_a"
+            android:inputType="textPassword"
+            android:layout_marginTop="16dp"
+            android:tag="Contraseña"/>
+
+        <EditText
+            android:id="@+id/suftvPassword2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/rojo"
+            android:ems="10"
+            android:layout_marginBottom="20dp"
+            android:hint="@string/repite_la_contrase_a"
+            android:inputType="textPassword"
+            android:layout_marginTop="16dp"
+            android:tag="Contraseña"/>
+
+        <Button
+            android:id="@+id/sufbSignUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/rojo"
+            android:text="@string/registrarme"
+            android:layout_marginTop="24dp"/>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
