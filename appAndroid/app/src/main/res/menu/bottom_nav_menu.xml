@@ -6,9 +6,9 @@
         android:title="Inicio" />
 
     <item
-        android:id="@+id/nav_search"
-        android:icon="@drawable/ic_search"
-        android:title="Buscar" />
+        android:id="@+id/action_crear_serie"
+        android:icon="@drawable/ic_add"
+        android:title="Añadir serie" />
 
     <item
         android:id="@+id/nav_profile"

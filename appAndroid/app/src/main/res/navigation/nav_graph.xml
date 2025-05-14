@@ -3,7 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/signUpFragment">
+    app:startDestination="@id/loginFragment">
+    <action
+        android:id="@+id/action_global_crearSerieFragment"
+        app:destination="@id/serieCreateFragment" />
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.registroseries.LoginFragment"
@@ -12,6 +15,9 @@
         <action
             android:id="@+id/action_loginFragment_to_seriesListFragment"
             app:destination="@id/seriesListFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
     </fragment>
     <fragment
         android:id="@+id/seriesListFragment"
@@ -21,6 +27,12 @@
         <action
             android:id="@+id/action_seriesListFragment_to_serieDetailFragment"
             app:destination="@id/serieDetailFragment" />
+        <action
+            android:id="@+id/action_seriesListFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_seriesListFragment_to_serieCreateFragment"
+            app:destination="@id/serieCreateFragment" />
     </fragment>
     <fragment
         android:id="@+id/serieDetailFragment"
@@ -36,4 +48,9 @@
             android:id="@+id/action_signUpFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/serieCreateFragment"
+        android:name="com.example.registroseries.SerieCreateFragment"
+        android:label="fragment_serie_create"
+        tools:layout="@layout/fragment_serie_create" />
 </navigation>

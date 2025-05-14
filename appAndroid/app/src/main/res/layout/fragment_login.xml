@@ -10,7 +10,7 @@
         android:id="@+id/lfbLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="184dp"
+        android:layout_marginTop="196dp"
         android:backgroundTint="@color/rojo"
         android:text="@string/iniciar_sesion"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,7 +36,7 @@
         android:id="@+id/lftvPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="48dp"
         android:backgroundTint="@color/rojo"
         android:ems="10"
         android:hint="@string/contrase_a"
@@ -45,4 +45,23 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lftvEmail" />
+
+    <TextView
+        android:id="@+id/lftvIrSignUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="21dp"
+        android:autoLink="none"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingTop="16dp"
+        android:text="¿Todavia no tienes cuenta? Registrate!"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/lfbLogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lftvPassword" />
 </androidx.constraintlayout.widget.ConstraintLayout>

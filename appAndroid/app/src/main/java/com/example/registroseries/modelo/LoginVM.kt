@@ -1,37 +1,41 @@
 package com.example.registroseries.modelo
 
+import android.app.Application
 import android.content.Context
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class LoginVM: ViewModel() {
-/*    private val _loginSuccess = MutableLiveData<Boolean>()
-    val loginSuccess: LiveData<Boolean> get() = _loginSuccess
+class LoginVM(application: Application) : AndroidViewModel(application) {
+   //private val _loginExitoso = MutableLiveData<Boolean>()
+    //val loginExitoso: LiveData<Boolean> get() = _loginExitoso
+    var loginExitoso: Boolean = false
 
-    private val sharedPref = application.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+    private val user = application.getSharedPreferences("usuario", Context.MODE_PRIVATE)
 
-    private val validUser = "admin"
-    private val validPassword = "1234"
+    private val emailValido =  user.getString("email", "")
 
-    fun login(username: String, password: String) {
-        if (username == validUser && password == validPassword) {
+    private val passwdValido = user.getString("password", "")
+
+    fun login(email: String, password: String) {
+        if (email == emailValido && password == passwdValido) {
             saveSession(true)
-            _loginSuccess.value = true
+            loginExitoso = true
         } else {
-            _loginSuccess.value = false
+            loginExitoso = false
         }
     }
 
     private fun saveSession(isLoggedIn: Boolean) {
-        sharedPref.edit().putBoolean("is_logged_in", isLoggedIn).apply()
+        user.edit().putBoolean("is_logged_in", isLoggedIn).apply()
     }
 
     fun isUserLoggedIn(): Boolean {
-        return sharedPref.getBoolean("is_logged_in", false)
+        return user.getBoolean("is_logged_in", false)
     }
 
     fun logout() {
-        sharedPref.edit().putBoolean("is_logged_in", false).apply()
-    }*/
+        user.edit().putBoolean("is_logged_in", false).apply()
+    }
 }

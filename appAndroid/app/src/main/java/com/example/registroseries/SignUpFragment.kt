@@ -67,6 +67,10 @@ class SignUpFragment : Fragment() {
                 findNavController().navigate(R.id.action_signUpFragment_to_loginFragment)
             }
         }
+
+        binding.suftvIrLogin.setOnClickListener {
+            findNavController().navigate(R.id.action_signUpFragment_to_loginFragment)
+        }
     }
 
     fun validarDatos(): Usuario? {
