@@ -4,20 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/loginFragment">
+<!--    acciones globales-->
     <action
         android:id="@+id/action_global_crearSerieFragment"
         app:destination="@id/serieCreateFragment" />
+    <action
+        android:id="@+id/action_global_dashboardFragment"
+        app:destination="@id/dashboardFragment" />
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.registroseries.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_loginFragment_to_seriesListFragment"
-            app:destination="@id/seriesListFragment" />
-        <action
             android:id="@+id/action_loginFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment" />
     </fragment>
     <fragment
         android:id="@+id/seriesListFragment"
@@ -53,4 +57,15 @@
         android:name="com.example.registroseries.SerieCreateFragment"
         android:label="fragment_serie_create"
         tools:layout="@layout/fragment_serie_create" />
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.example.registroseries.DashboardFragment"
+        android:label="DashboardFragment" >
+        <action
+            android:id="@+id/action_dashboardFragment_to_seriesListFragment"
+            app:destination="@id/seriesListFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_serieCreateFragment"
+            app:destination="@id/serieCreateFragment" />
+    </fragment>
 </navigation>

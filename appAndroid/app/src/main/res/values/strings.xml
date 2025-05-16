@@ -57,4 +57,5 @@
     <string name="repite_la_contrase_a">Repite la contraseña</string>
     <string name="registrarme">Registrarme</string>
     <string name="mensaje_de_exito">Mensaje de exito</string>
+    <string name="cerrar_sesion">Cerrar sesion</string>
 </resources>

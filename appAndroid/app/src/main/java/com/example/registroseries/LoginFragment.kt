@@ -78,7 +78,8 @@ class LoginFragment : Fragment() {
         (activity as MainActivity).loginVM.login(email, password)
 
         if ((activity as MainActivity).loginVM.loginExitoso){
-            findNavController().navigate(R.id.action_loginFragment_to_seriesListFragment)
+            //findNavController().navigate(R.id.action_loginFragment_to_seriesListFragment)
+            findNavController().navigate(R.id.action_loginFragment_to_dashboardFragment)
         }else{
             mostrarMensajePersonalizado("Usuario o contraseña incorrectos", R.layout.custom_toast_layout)
         }

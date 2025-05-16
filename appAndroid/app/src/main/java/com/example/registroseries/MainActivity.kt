@@ -23,6 +23,8 @@ import java.util.Calendar
 import kotlin.random.Random
 import androidx.navigation.findNavController
 import androidx.navigation.NavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.util.Date
 
 class MainActivity : AppCompatActivity() {
 
@@ -59,6 +61,33 @@ class MainActivity : AppCompatActivity() {
                 .setAction("Action", null)
                 .setAnchorView(R.id.fab).show()
         }*/
+
+        //menu de abajo
+       accionesBottomNavMenu()
+    }
+
+    fun accionesBottomNavMenu(){
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+
+        bottomNav.setOnItemSelectedListener { item ->
+            when(item.itemId) {
+                R.id.action_settings -> {
+                    Toast.makeText(this, "Configuraciones", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.action_crear_serie -> {
+                    findNavController(R.id.nav_host_fragment_content_main)
+                        .navigate(R.id.action_global_crearSerieFragment)
+                    true
+                }
+                R.id.action_dashboard -> {
+                    findNavController(R.id.nav_host_fragment_content_main)
+                        .navigate(R.id.action_global_dashboardFragment)
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     fun generarSeries(): List<Serie> {
@@ -85,6 +114,8 @@ class MainActivity : AppCompatActivity() {
             val serieFinalizada = estadoUsuario == "Completada"
             val notas = "Notas sobre la serie $titulo"
             val imagenUrl = imagenesUrl.random()
+            val fechaCreacion: Date = Date()
+
 
             val fechaProximoEstreno = Calendar.getInstance().apply {
                 add(Calendar.MONTH, Random.nextInt(1, 6)) // Proximo estreno entre 1 y 6 meses
@@ -100,7 +131,8 @@ class MainActivity : AppCompatActivity() {
                 estado_usuario = estadoUsuario,
                 serie_finalizada = serieFinalizada,
                 notas = notas,
-                imagen_url = imagenUrl
+                imagen_url = imagenUrl,
+                fecha_creacion = fechaCreacion
             )
 
             series.add(serie)
@@ -139,10 +171,13 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Configuraciones", Toast.LENGTH_LONG).show()
                 true
             }
-            /*R.id.action_crear_serie -> {
-                NavController.navigate(R.id.action_global_crearSerieFragment)
+            R.id.action_crear_serie -> {
+                Toast.makeText(this, "crear", Toast.LENGTH_LONG).show()
 
-            }*/
+                val navController = findNavController(R.id.nav_host_fragment_content_main)
+                navController.navigate(R.id.action_global_crearSerieFragment)
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

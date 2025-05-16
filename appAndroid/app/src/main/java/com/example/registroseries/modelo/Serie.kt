@@ -12,6 +12,8 @@ class Serie (
     val estado_usuario: String,
     val serie_finalizada: Boolean,
     val notas: String,
-    val imagen_url: String
+    val imagen_url: String,
+    val fecha_creacion: Date
+
 
 )
