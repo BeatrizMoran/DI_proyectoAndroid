@@ -7,44 +7,41 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.registroseries.databinding.FragmentSerieDetailBinding
+import com.example.registroseries.modelo.SerieVM
 
 
 class SerieDetailFragment : Fragment() {
     private var _binding: FragmentSerieDetailBinding? = null
-    private var titulo: String? = null
-
-
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
+
+    private var titulo: String? = null
+    private lateinit var viewModel: SerieVM
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentSerieDetailBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        arguments?.let {
-            titulo = it.getString("titulo")
-        }
+        // Obtener el título que pasaron en el bundle
+        titulo = arguments?.getString("titulo")
 
-        val series = (activity as MainActivity).series
+        viewModel = (activity as MainActivity).serieViewModel
 
-        val serieFiltrada = series.find { serie ->
-            serie.titulo.equals(titulo, ignoreCase = true)
+        // Observar la lista de series
+        viewModel.listaSeries.observe(viewLifecycleOwner) { lista ->
+            val serieFiltrada = lista.find {
+                it.titulo.equals(titulo, ignoreCase = true)
+            }
 
-        }
-
-        if (serieFiltrada != null) {
-            binding.sdftvTituloSerie.text = serieFiltrada.titulo.toString()
+            serieFiltrada?.let { serie ->
+                binding.sdftvTituloSerie.text = serie.titulo
+            }
         }
     }
 

@@ -67,5 +67,8 @@
         <action
             android:id="@+id/action_dashboardFragment_to_serieCreateFragment"
             app:destination="@id/serieCreateFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_serieDetailFragment"
+            app:destination="@id/serieDetailFragment" />
     </fragment>
 </navigation>

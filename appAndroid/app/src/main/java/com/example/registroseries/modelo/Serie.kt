@@ -1,19 +1,23 @@
 package com.example.registroseries.modelo
 
 import java.util.Date
+import androidx.annotation.NonNull
+import androidx.annotation.Nullable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-class Serie (
-    val titulo: String,
-    val genero: String,
-    val temporadaActual: Int,
-    val captituloActual: Int,
-    val puntuacion: Double,
-    val fecha_proximo_estreno: Date,
-    val estado_usuario: String,
-    val serie_finalizada: Boolean,
-    val notas: String,
-    val imagen_url: String,
-    val fecha_creacion: Date
-
-
+@Entity(tableName = "Series")
+data class Serie(
+    @PrimaryKey(autoGenerate = true) var id: Int = 0,
+    var titulo: String,
+    var genero: String,
+    var temporadaActual: Int?,
+    var captituloActual: Int?,
+    var puntuacion: Double?,
+    var fechaProximoEstreno: Date?,
+    var estadoVisualizacion: String,
+    var emisionFinalizada: Boolean?,
+    var notas: String?,
+    var imagenUrl: String?,
+    var fechaCreacion: Date
 )

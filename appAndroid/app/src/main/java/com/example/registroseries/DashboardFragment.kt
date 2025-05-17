@@ -10,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.registroseries.databinding.FragmentDashboardBinding
-import com.example.registroseries.databinding.FragmentSerieDetailBinding
 import com.example.registroseries.modelo.Serie
 import com.example.registroseries.recyclerView.CarruselSeriesAdaptador
 import com.google.android.material.tabs.TabLayout
@@ -29,12 +28,6 @@ class DashboardFragment : Fragment() {
     private lateinit var viewPager: ViewPager2
     private lateinit var adapter: CarruselSeriesAdaptador
 
-    // Supón que tienes un método para obtener las series ordenadas
-    private fun obtenerUltimasSeries(): List<Serie> {
-        // Devuelve series ordenadas por fecha de creación descendente
-        return (activity as MainActivity).series.sortedByDescending { it.fecha_creacion }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,22 +41,41 @@ class DashboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val progressBar = binding.progressBarLoading
+        val progressBar2 = binding.progressBarLoading2
+
+
+        progressBar.visibility = View.VISIBLE // Mostrar spinner al iniciar
+        progressBar2.visibility = View.VISIBLE
+
+
         viewPager = view.findViewById(R.id.viewPagerUltimasSeries)
 
+        (activity as MainActivity).serieViewModel.listaSeries.observe(viewLifecycleOwner) { lista ->
+            progressBar.visibility = View.GONE  // Ocultar spinner cuando hay datos
+            progressBar2.visibility = View.GONE
 
 
-        val ultimasSeries = obtenerUltimasSeries()
+            val listaOrdenada = lista.sortedByDescending { it.fechaCreacion }
 
-        adapter = CarruselSeriesAdaptador(ultimasSeries) { serieClicked ->
-            // Acción cuando se toca una serie: abrir detalle, por ejemplo
-            Toast.makeText(requireContext(), "Serie: ${serieClicked.titulo}", Toast.LENGTH_SHORT).show()
+            adapter = CarruselSeriesAdaptador(listaOrdenada) { serieClicked ->
+                Toast.makeText(requireContext(), "Serie: ${serieClicked.titulo}", Toast.LENGTH_SHORT).show()
+                val bundle = Bundle().apply {
+                    putString("titulo", serieClicked.titulo)
+                }
+                findNavController().navigate(R.id.action_dashboardFragment_to_serieDetailFragment, bundle)
+            }
+
+            viewPager.adapter = adapter
+
+            val tabLayout = view.findViewById<TabLayout>(R.id.tabLayoutDots)
+            TabLayoutMediator(tabLayout, viewPager) { _, _ -> }.attach()
+
+
+            inicializarDatosEstadisticas(lista)
+
         }
 
-        viewPager.adapter = adapter
-        val tabLayout = view.findViewById<TabLayout>(R.id.tabLayoutDots)
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            // No necesitas configurar nada, solo sirve para mostrar dots
-        }.attach()
         viewPager.setPadding(60, 0, 60, 0)
         viewPager.clipToPadding = false
         viewPager.clipChildren = false
@@ -72,15 +84,32 @@ class DashboardFragment : Fragment() {
         val recyclerView = viewPager.getChildAt(0) as RecyclerView
         recyclerView.clipToPadding = false
 
-        binding.dfbVerListaSeries.setOnClickListener{
+        binding.dfbVerListaSeries.setOnClickListener {
             findNavController().navigate(R.id.action_dashboardFragment_to_seriesListFragment)
         }
-        binding.btnAddSerie.setOnClickListener{
+
+        binding.btnAddSerie.setOnClickListener {
             findNavController().navigate(R.id.action_dashboardFragment_to_serieCreateFragment)
         }
 
+
+
     }
 
+
+    fun inicializarDatosEstadisticas(lista: List<Serie>){
+        var numeroSeries = lista.size
+
+        val seriesVistas = lista.count { it.estadoVisualizacion.equals("Viendo", ignoreCase = true) }
+        val seriesPendientes = lista.count { it.estadoVisualizacion.equals("Pendiente", ignoreCase = true) }
+        val seriesAbandonadas = lista.count { it.estadoVisualizacion.equals("Abandonadas", ignoreCase = true) }
+
+
+        //estadisticas -> numero series
+        binding.tvSeriesTotales.text = "Series totales: $numeroSeries"
+        binding.tvSeriesPendientes.text = "Series pendientes: $seriesPendientes"
+        binding.tvSeriesVistas.text = "Series vistas: $seriesVistas"
+    }
 
 
     override fun onDestroyView() {

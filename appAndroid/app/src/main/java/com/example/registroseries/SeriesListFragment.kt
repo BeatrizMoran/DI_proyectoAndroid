@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.registroseries.databinding.FragmentFirstBinding
 import com.example.registroseries.databinding.FragmentSeriesListBinding
+import com.example.registroseries.modelo.SerieVM
 import com.example.registroseries.recyclerView.Adaptador
 
 
@@ -32,8 +33,16 @@ class SeriesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.tfrvSeries.layoutManager=LinearLayoutManager(activity as MainActivity)
-        binding.tfrvSeries.adapter= Adaptador((activity as MainActivity).series)    }
+        val adaptador = Adaptador(emptyList())
+        binding.tfrvSeries.layoutManager = LinearLayoutManager(requireContext())
+        binding.tfrvSeries.adapter = adaptador
+
+        (activity as MainActivity).serieViewModel.listaSeries.observe(viewLifecycleOwner) { lista ->
+            adaptador.setData(lista)
+        }
+
+
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

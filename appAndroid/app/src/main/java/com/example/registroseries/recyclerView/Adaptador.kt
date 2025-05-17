@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.lifecycle.LiveData
 import androidx.navigation.NavController
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
@@ -16,7 +17,7 @@ import com.example.registroseries.modelo.Serie
 
 
 
-class Adaptador(val series:MutableList<Serie>): RecyclerView.Adapter<Adaptador.SerieVH>(){
+class Adaptador(private var series: List<Serie>) : RecyclerView.Adapter<Adaptador.SerieVH>() {
     //El ViewHolder es la clase de cada uno de los contenedores
     inner class SerieVH (val binding: ItemSerieBinding): RecyclerView.ViewHolder(binding.root){
         var posicion: Int = 0
@@ -43,7 +44,7 @@ class Adaptador(val series:MutableList<Serie>): RecyclerView.Adapter<Adaptador.S
         val serie = series[position]
         holder.binding.tvisTituloSerie.text = serie.titulo
         holder.binding.tvisCategoriaSerie.text = serie.genero
-        holder.binding.tvisEstadoSerie.text = serie.estado_usuario
+        holder.binding.tvisEstadoSerie.text = serie.estadoVisualizacion
 
         holder.posicion = position
 
@@ -53,5 +54,10 @@ class Adaptador(val series:MutableList<Serie>): RecyclerView.Adapter<Adaptador.S
     //retorna el número de elementos que vamos a querer que tenga el contenedor padre
     override fun getItemCount(): Int {
         return series.count()
+    }
+
+    fun setData(nuevasSeries: List<Serie>) {
+        this.series = nuevasSeries
+        notifyDataSetChanged()
     }
 }
