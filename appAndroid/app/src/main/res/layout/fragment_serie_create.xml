@@ -34,7 +34,7 @@
                 android:id="@+id/ivImagen"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/ic_add"
+                android:src="@drawable/ic_image_add"
                 android:contentDescription="Seleccionar imagen"
                 android:scaleType="centerCrop"
                 android:background="?attr/selectableItemBackgroundBorderless"
@@ -76,7 +76,7 @@
 
 
             <EditText
-                android:id="@+id/numeroDecimal"
+                android:id="@+id/scfetnPuntuacion"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"

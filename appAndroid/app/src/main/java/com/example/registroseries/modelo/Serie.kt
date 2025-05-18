@@ -16,7 +16,7 @@ data class Serie(
     var puntuacion: Double?,
     var fechaProximoEstreno: Date?,
     var estadoVisualizacion: String,
-    var emisionFinalizada: Boolean?,
+    var serieEnEmision: Boolean?,
     var notas: String?,
     var imagenUrl: String?,
     var fechaCreacion: Date

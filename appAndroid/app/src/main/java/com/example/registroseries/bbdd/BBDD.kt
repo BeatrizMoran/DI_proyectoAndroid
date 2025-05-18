@@ -13,7 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.Date
 
-@Database(entities = [Serie::class], version = 1, exportSchema = false)
+@Database(entities = [Serie::class], version = 2, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class BBDD : RoomDatabase() {
     abstract fun miDAO(): SerieDAO
@@ -29,14 +29,17 @@ abstract class BBDD : RoomDatabase() {
                     BBDD::class.java,
                     "serie_dataBase"
                 )
+                    .fallbackToDestructiveMigration()
+
                     .addCallback(object : RoomDatabase.Callback() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
                             super.onCreate(db)
                             Log.d("RoomCallback", "¡Base de datos creada por primera vez!")
+                            // Crear base de datos temporal solo para insertar
                             CoroutineScope(Dispatchers.IO).launch {
-                                val dao = INSTANCE?.miDAO() ?: return@launch
-                                val series = generarSeriesDeEjemplo()
-                                series.forEach { dao.insertarSerie(it) }
+                                getDatabase(context).miDAO().apply {
+                                    generarSeriesDeEjemplo().forEach { insertarSerie(it) }
+                                }
                             }
                         }
                     })
@@ -67,7 +70,7 @@ abstract class BBDD : RoomDatabase() {
                     puntuacion = null,
                     fechaProximoEstreno = null,
                     estadoVisualizacion = estadosUsuario.getOrElse(i) { "Pendiente" },
-                    emisionFinalizada = false,
+                    serieEnEmision = false,
                     notas = null,
                     imagenUrl = null,
                     fechaCreacion = Date()

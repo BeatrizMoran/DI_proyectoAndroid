@@ -38,7 +38,9 @@ class SeriesListFragment : Fragment() {
         binding.tfrvSeries.adapter = adaptador
 
         (activity as MainActivity).serieViewModel.listaSeries.observe(viewLifecycleOwner) { lista ->
-            adaptador.submitList(lista)
+            var listaSeries = lista.sortedByDescending { it.fechaCreacion }
+
+            adaptador.submitList(listaSeries)
         }
 
 

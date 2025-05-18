@@ -56,7 +56,11 @@
         android:id="@+id/serieCreateFragment"
         android:name="com.example.registroseries.SerieCreateFragment"
         android:label="fragment_serie_create"
-        tools:layout="@layout/fragment_serie_create" />
+        tools:layout="@layout/fragment_serie_create" >
+        <action
+            android:id="@+id/action_serieCreateFragment_to_seriesListFragment"
+            app:destination="@id/seriesListFragment" />
+    </fragment>
     <fragment
         android:id="@+id/dashboardFragment"
         android:name="com.example.registroseries.DashboardFragment"

@@ -2,6 +2,7 @@ package com.example.registroseries
 
 import android.app.DatePickerDialog
 import android.graphics.Color
+import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -15,7 +16,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.navigation.fragment.findNavController
 import com.example.registroseries.databinding.FragmentSerieCreateBinding
 import com.example.registroseries.databinding.FragmentSignUpBinding
+import com.example.registroseries.modelo.Serie
 import com.example.registroseries.modelo.Usuario
+import java.util.Date
+import java.util.Locale
 
 
 class SerieCreateFragment : Fragment() {
@@ -79,6 +83,33 @@ class SerieCreateFragment : Fragment() {
 
         cbFechaEmision.setOnCheckedChangeListener { _, isChecked ->
             etFechaEmision.visibility = if (isChecked) View.VISIBLE else View.GONE
+        }
+
+        val formatoFecha = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val fechaProximoEstreno = try {
+            formatoFecha.parse(binding.etFechaEmision.text.toString())
+        } catch (e: Exception) {
+            null // o alguna fecha por defecto si quieres
+        }
+
+        binding.btnCrearSerie.setOnClickListener{
+            val serie = Serie(
+                titulo = binding.inputTitulo.text.toString(),
+                genero = binding.inputGenero.text.toString(),
+                temporadaActual = binding.inputTemporadaActual.text.toString().toIntOrNull() ?: 0,
+                captituloActual = binding.inputCapituloActual.text.toString().toIntOrNull() ?: 0,
+                puntuacion = binding.scfetnPuntuacion.text.toString().toDoubleOrNull() ?: 0.0,
+                fechaProximoEstreno = fechaProximoEstreno,
+                estadoVisualizacion = binding.spinnerEstadoUsuario.selectedItem.toString(),
+                serieEnEmision = binding.switchFinalizada.isChecked,
+                notas = binding.etNotas.text.toString(),
+                imagenUrl = null,
+                fechaCreacion = Date()
+            )
+
+            (activity as MainActivity).serieViewModel.insertarSerie(serie)
+            findNavController().navigate(R.id.action_serieCreateFragment_to_seriesListFragment)
+
         }
 
 /*
