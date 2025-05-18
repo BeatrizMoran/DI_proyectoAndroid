@@ -33,12 +33,12 @@ class SeriesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adaptador = Adaptador(emptyList())
+        val adaptador = Adaptador()
         binding.tfrvSeries.layoutManager = LinearLayoutManager(requireContext())
         binding.tfrvSeries.adapter = adaptador
 
         (activity as MainActivity).serieViewModel.listaSeries.observe(viewLifecycleOwner) { lista ->
-            adaptador.setData(lista)
+            adaptador.submitList(lista)
         }
 
 

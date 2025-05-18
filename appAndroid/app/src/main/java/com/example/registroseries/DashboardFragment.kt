@@ -59,9 +59,8 @@ class DashboardFragment : Fragment() {
             val listaOrdenada = lista.sortedByDescending { it.fechaCreacion }
 
             adapter = CarruselSeriesAdaptador(listaOrdenada) { serieClicked ->
-                Toast.makeText(requireContext(), "Serie: ${serieClicked.titulo}", Toast.LENGTH_SHORT).show()
                 val bundle = Bundle().apply {
-                    putString("titulo", serieClicked.titulo)
+                    putInt("id", serieClicked.id)
                 }
                 findNavController().navigate(R.id.action_dashboardFragment_to_serieDetailFragment, bundle)
             }

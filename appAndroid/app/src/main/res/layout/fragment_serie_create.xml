@@ -1,14 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SerieCreateFragment">
+    android:padding="16dp">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-</FrameLayout>
+        <!-- Título y puntuacion -->
+
+        <TextView
+            android:id="@+id/scftvTitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Registrar nueva serie"
+            android:textSize="25dp"
+            android:layout_marginVertical="12dp"
+            />
+
+        <LinearLayout
+            android:id="@+id/scfllImagen"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="8dp">
+
+            <ImageView
+                android:id="@+id/ivImagen"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_add"
+                android:contentDescription="Seleccionar imagen"
+                android:scaleType="centerCrop"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Seleccionar imagen"
+                android:paddingStart="16dp"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            >
+
+            <!-- Título (80% del espacio) -->
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7"
+                android:hint="Título">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputTitulo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <EditText
+                android:id="@+id/numeroDecimal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="0.3"
+                android:inputType="numberDecimal"
+                android:hint="Puntuacion"/>
+        </LinearLayout>
+
+        <!-- Género -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Género"
+            android:layout_marginVertical="12dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputGenero"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Título -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            >
+
+            <!-- Título (80% del espacio) -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:hint="Temporada Actual"
+                android:layout_marginBottom="12dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputTemporadaActual"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Estado (20% del espacio) -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="0.5"
+                android:hint="Capitulo actual">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputCapituloActual"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <!-- Estado usuario -->
+        <Spinner
+            android:id="@+id/spinnerEstadoUsuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:entries="@array/estados_visualizacionSerie_array"/>
+
+
+
+        <!-- Switch: ¿serie finalizada? -->
+        <Switch
+            android:id="@+id/switchFinalizada"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Serie en emision"
+            android:layout_marginTop="12dp"
+            app:thumbTint="@color/rojo"
+            app:trackTint="@color/rojo"/>
+
+        <!-- Botón Guardar -->
+
+        <CheckBox
+            android:id="@+id/scfcbFechaEmision"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hay fecha de emision nueva temporada" />
+        <EditText
+            android:id="@+id/etFechaEmision"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Fecha de emisión"
+            android:inputType="date"
+            android:visibility="gone" />
+
+
+        <EditText
+            android:id="@+id/etNotas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Escribe tus notas aquí"
+            android:inputType="textMultiLine"
+            android:lines="4"
+            android:gravity="top|start"
+            android:padding="8dp"
+            />
+
+
+        <Button
+            android:id="@+id/btnCrearSerie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Guardar serie"
+            android:layout_marginTop="24dp"/>
+
+
+    </LinearLayout>
+</ScrollView>

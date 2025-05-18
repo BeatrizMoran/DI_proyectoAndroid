@@ -14,7 +14,7 @@ class SerieDetailFragment : Fragment() {
     private var _binding: FragmentSerieDetailBinding? = null
     private val binding get() = _binding!!
 
-    private var titulo: String? = null
+    private var id: Int? = null
     private lateinit var viewModel: SerieVM
 
     override fun onCreateView(
@@ -29,14 +29,14 @@ class SerieDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Obtener el título que pasaron en el bundle
-        titulo = arguments?.getString("titulo")
+        id = arguments?.getInt("id")
 
         viewModel = (activity as MainActivity).serieViewModel
 
         // Observar la lista de series
         viewModel.listaSeries.observe(viewLifecycleOwner) { lista ->
             val serieFiltrada = lista.find {
-                it.titulo.equals(titulo, ignoreCase = true)
+                it.id == id
             }
 
             serieFiltrada?.let { serie ->

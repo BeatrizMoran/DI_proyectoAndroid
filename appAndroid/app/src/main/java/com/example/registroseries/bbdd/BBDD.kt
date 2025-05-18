@@ -13,9 +13,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.Date
 
-@Database(entities = arrayOf(Serie::class), version = 1, exportSchema = false)
+@Database(entities = [Serie::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
-abstract class BBDD: RoomDatabase() {
+abstract class BBDD : RoomDatabase() {
     abstract fun miDAO(): SerieDAO
 
     companion object {
@@ -29,51 +29,49 @@ abstract class BBDD: RoomDatabase() {
                     BBDD::class.java,
                     "serie_dataBase"
                 )
-                    .addCallback(roomCallback) // añadimos el callback
+                    .addCallback(object : RoomDatabase.Callback() {
+                        override fun onCreate(db: SupportSQLiteDatabase) {
+                            super.onCreate(db)
+                            Log.d("RoomCallback", "¡Base de datos creada por primera vez!")
+                            CoroutineScope(Dispatchers.IO).launch {
+                                val dao = INSTANCE?.miDAO() ?: return@launch
+                                val series = generarSeriesDeEjemplo()
+                                series.forEach { dao.insertarSerie(it) }
+                            }
+                        }
+                    })
                     .build()
                 INSTANCE = instance
                 instance
             }
         }
 
-        private val roomCallback = object : RoomDatabase.Callback() {
-            override fun onCreate(db: SupportSQLiteDatabase) {
-                super.onCreate(db)
-                Log.d("RoomCallback", "¡Base de datos creada por primera vez!")
+        // Función para generar series de ejemplo
+        private fun generarSeriesDeEjemplo(): List<Serie> {
+            val titulos = listOf(
+                "Breaking Bad",
+                "Stranger Things",
+                "Game of Thrones",
+                "The Witcher",
+                "The Office"
+            )
+            val generos = listOf("Drama", "Comedia", "Ciencia Ficción", "Acción", "Terror")
+            val estadosUsuario = listOf("Viendo", "Completada", "Pendiente", "Abandonada", "Pendiente")
 
-                val titulos = listOf(
-                    "Breaking Bad",
-                    "Stranger Things",
-                    "Game of Thrones",
-                    "The Witcher",
-                    "The Office"
+            return titulos.indices.map { i ->
+                Serie(
+                    titulo = titulos[i],
+                    genero = generos.getOrElse(i) { "Desconocido" },
+                    temporadaActual = 1,
+                    captituloActual = 1,
+                    puntuacion = null,
+                    fechaProximoEstreno = null,
+                    estadoVisualizacion = estadosUsuario.getOrElse(i) { "Pendiente" },
+                    emisionFinalizada = false,
+                    notas = null,
+                    imagenUrl = null,
+                    fechaCreacion = Date()
                 )
-                val generos = listOf("Drama", "Comedia", "Ciencia Ficción", "Acción", "Terror")
-                val estadosUsuario = listOf("Viendo", "Completada", "Pendiente", "Abandonada")
-
-                // Para acceder a la instancia de la BD y el DAO, hay que usar INSTANCE.
-                INSTANCE?.let { database ->
-                    CoroutineScope(Dispatchers.IO).launch {
-                        val dao = database.miDAO()
-
-                        for (i in titulos.indices) {
-                            val serie = Serie(
-                                titulo = titulos[i],
-                                genero = generos.getOrElse(i) { "Desconocido" },
-                                temporadaActual = 1,
-                                captituloActual = 1,
-                                puntuacion = null,
-                                fechaProximoEstreno = null,
-                                estadoVisualizacion = estadosUsuario.getOrElse(i) { "Pendiente" },
-                                emisionFinalizada = false,
-                                notas = null,
-                                imagenUrl = null,
-                                fechaCreacion = Date()
-                            )
-                            dao.insertarSerie(serie)
-                        }
-                    }
-                }
             }
         }
     }

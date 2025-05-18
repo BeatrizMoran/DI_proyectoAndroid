@@ -1,4 +1,11 @@
 <resources>
+    <string-array name="estados_visualizacionSerie_array">
+        <item>Viendo</item>
+        <item>Terminada</item>
+        <item>Pendiente</item>
+        <item>Abandonada</item>
+    </string-array>
+
     <string name="app_name">registroSeries</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
