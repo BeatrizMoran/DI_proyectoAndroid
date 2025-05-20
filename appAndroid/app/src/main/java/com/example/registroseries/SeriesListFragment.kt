@@ -1,5 +1,6 @@
 package com.example.registroseries
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -50,4 +51,7 @@ class SeriesListFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+
+
 }

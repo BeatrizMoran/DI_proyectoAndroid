@@ -1,5 +1,6 @@
 package com.example.registroseries.recyclerView
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -18,6 +19,12 @@ class Adaptador : ListAdapter<Serie, Adaptador.SerieVH>(ComparadorSeries()) {
             binding.tvisTituloSerie.text = serie.titulo
             binding.tvisCategoriaSerie.text = serie.genero
             binding.tvisEstadoSerie.text = serie.estadoVisualizacion
+
+            if (serie.imagenUrl != null) {
+                val bitmap =
+                    BitmapFactory.decodeByteArray(serie.imagenUrl, 0, serie.imagenUrl!!.size)
+                binding.imageView.setImageBitmap(bitmap)
+            }
 
             binding.isbVerInfo.setOnClickListener {
                 val bundle = Bundle().apply {

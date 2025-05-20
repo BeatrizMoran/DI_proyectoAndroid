@@ -1,5 +1,6 @@
 package com.example.registroseries
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -28,6 +29,7 @@ class SerieDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         // Obtener el título que pasaron en el bundle
         id = arguments?.getInt("id")
 
@@ -41,6 +43,11 @@ class SerieDetailFragment : Fragment() {
 
             serieFiltrada?.let { serie ->
                 binding.sdftvTituloSerie.text = serie.titulo
+                if (serie.imagenUrl != null) {
+                    val bitmap =
+                        BitmapFactory.decodeByteArray(serie.imagenUrl, 0, serie.imagenUrl!!.size)
+                    binding.sdfivImagenSerie.setImageBitmap(bitmap)
+                }
             }
         }
     }

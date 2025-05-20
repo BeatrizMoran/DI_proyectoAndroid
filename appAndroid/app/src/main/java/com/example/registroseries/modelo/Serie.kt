@@ -18,6 +18,6 @@ data class Serie(
     var estadoVisualizacion: String,
     var serieEnEmision: Boolean?,
     var notas: String?,
-    var imagenUrl: String?,
+    var imagenUrl: ByteArray?,
     var fechaCreacion: Date
 )

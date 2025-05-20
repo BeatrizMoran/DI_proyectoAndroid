@@ -1,5 +1,6 @@
 package com.example.registroseries.recyclerView
 
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,6 +50,7 @@ class CarruselSeriesAdaptador (
                 itemView.findViewById<TextView>(R.id.tvTituloSerie3)
             )
 
+
             fun bind(series: List<Serie>, onSerieClick: (Serie) -> Unit) {
                 // Itera para 3 slots
                 for (i in 0 until 3) {
@@ -56,8 +58,11 @@ class CarruselSeriesAdaptador (
                         val serie = series[i]
                         containers[i].visibility = View.VISIBLE
                         titles[i].text = serie.titulo
-                        // Asumiendo que tienes una url o drawable, aquí un ejemplo básico:
-                        images[i].setImageResource(R.drawable.serie_default_image)
+
+                        if (serie.imagenUrl != null) {
+                            val bitmap = BitmapFactory.decodeByteArray(serie.imagenUrl, 0, serie.imagenUrl?.size ?: 0)
+                            images[i].setImageBitmap(bitmap)
+                        }
                         containers[i].setOnClickListener { onSerieClick(serie) }
                     } else {
                         containers[i].visibility = View.INVISIBLE

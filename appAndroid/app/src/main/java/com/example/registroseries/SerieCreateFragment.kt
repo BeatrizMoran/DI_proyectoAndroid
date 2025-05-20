@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.graphics.Color
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -26,6 +27,8 @@ class SerieCreateFragment : Fragment() {
     private var _binding: FragmentSerieCreateBinding? = null
     private lateinit var imagePickerLauncher: ActivityResultLauncher<String>
 
+    private var imagenSeleccionadaBytes: ByteArray? = null // almacena la imagen para la serie
+
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -41,7 +44,11 @@ class SerieCreateFragment : Fragment() {
 
     }
 
-
+    private fun uriToByteArray(uri: Uri): ByteArray? {
+        return requireContext().contentResolver.openInputStream(uri)?.use {
+            it.readBytes()
+        }
+    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,12 +59,14 @@ class SerieCreateFragment : Fragment() {
         val ivImagen = binding.ivImagen
         val subirImagen = binding.scfllImagen
 
+
+
         // Registrar launcher para seleccionar imagen
         imagePickerLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             if (uri != null) {
                 ivImagen.setImageURI(uri)
-                // Puedes guardar el uri para subirlo a la BD o servidor
-            }
+                // Convertimos la imagen a bytes y la almacenamos
+                imagenSeleccionadaBytes = uriToByteArray(uri)            }
         }
 
         // Al hacer clic en la imagen, abre la galería
@@ -103,7 +112,7 @@ class SerieCreateFragment : Fragment() {
                 estadoVisualizacion = binding.spinnerEstadoUsuario.selectedItem.toString(),
                 serieEnEmision = binding.switchFinalizada.isChecked,
                 notas = binding.etNotas.text.toString(),
-                imagenUrl = null,
+                imagenUrl = imagenSeleccionadaBytes,
                 fechaCreacion = Date()
             )
 
