@@ -1,5 +1,6 @@
 package com.example.registroseries
 
+import android.app.AlertDialog
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
@@ -49,6 +50,20 @@ class SerieDetailFragment : Fragment() {
                     binding.sdfivImagenSerie.setImageBitmap(bitmap)
                 }
             }
+        }
+
+        binding.sdfbBorrar.setOnClickListener{
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setTitle("Borrar Serie")
+            builder.setMessage("¿Estás seguro de que quieres borrar la serie?")
+            builder.setPositiveButton("Aceptar") { dialog, _ ->
+
+                dialog.dismiss()
+            }
+            builder.setNegativeButton("Cancelar") { dialog, _ ->
+                dialog.dismiss()
+            }
+            builder.show()
         }
     }
 
