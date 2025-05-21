@@ -19,6 +19,7 @@ import com.example.registroseries.databinding.FragmentSerieCreateBinding
 import com.example.registroseries.databinding.FragmentSignUpBinding
 import com.example.registroseries.modelo.Serie
 import com.example.registroseries.modelo.Usuario
+import com.example.registroseries.utils.mostrarCalendarioConFecha
 import java.util.Date
 import java.util.Locale
 
@@ -77,31 +78,18 @@ class SerieCreateFragment : Fragment() {
         }
 
         // Muestra un DatePicker al hacer clic y pone la fecha seleccionada en el EditText.
-        etFechaEmision.setOnClickListener {
-            val calendario = Calendar.getInstance()
-            val datePicker = DatePickerDialog(
-                requireContext(),
-                { _, year, month, dayOfMonth ->
-                    val fecha = "%02d/%02d/%04d".format(dayOfMonth, month + 1, year)
-                    etFechaEmision.setText(fecha)
-                },
-                calendario.get(Calendar.YEAR),
-                calendario.get(Calendar.MONTH),
-                calendario.get(Calendar.DAY_OF_MONTH)
-            )
-            datePicker.show()
+        binding.etFechaEmision.setOnClickListener {
+            mostrarCalendarioConFecha(requireContext(), binding.etFechaEmision) { fecha ->
+                fechaProximoEstreno = fecha
+            }
         }
+
 
         cbFechaEmision.setOnCheckedChangeListener { _, isChecked ->
             etFechaEmision.visibility = if (isChecked) View.VISIBLE else View.GONE
         }
 
-        val formatoFecha = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        fechaProximoEstreno = try {
-            formatoFecha.parse(binding.etFechaEmision.text.toString())
-        } catch (e: Exception) {
-            null // o alguna fecha por defecto si quieres
-        }
+
 
         binding.btnCrearSerie.setOnClickListener {
             val serie = validarDatos()
