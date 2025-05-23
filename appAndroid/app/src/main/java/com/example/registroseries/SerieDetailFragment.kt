@@ -2,6 +2,7 @@ package com.example.registroseries
 
 import android.app.AlertDialog
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -82,8 +83,8 @@ class SerieDetailFragment : Fragment() {
             binding.sdfinputTitulo.setText(serie.titulo)
             binding.sdfetnPuntuacion.setText(serie.puntuacion?.toString() ?: "")
             binding.sdftilGenero.setText(serie.genero)
-            binding.inputTemporadaActual.setText(serie.temporadaActual.toString())
-            binding.inputCapituloActual.setText(serie.captituloActual.toString())
+            binding.inputTemporadaActual.setText( if (serie.temporadaActual != null) serie.temporadaActual.toString() else (""))
+            binding.inputCapituloActual.setText(if(serie.captituloActual != null) serie.captituloActual.toString() else(""))
 
             // Spinner
             val adapter = spinner.adapter
@@ -101,9 +102,9 @@ class SerieDetailFragment : Fragment() {
             binding.sdfswitchFinalizada.isChecked = serie.serieEnEmision ?: false
 
             // Fecha
-            binding.etFechaEmision.setText(
+            binding.etFechaEmision.hint =
                 serie.fechaProximoEstreno?.let { formatoFecha(it) } ?: "No próxima fecha de emisión"
-            )
+
 
             // Notas
             binding.sdfetNotas.setText(serie.notas ?: "")
@@ -168,28 +169,14 @@ class SerieDetailFragment : Fragment() {
         }
 
         binding.sdfbActualizar.setOnClickListener {
-            val serie = serieFiltrada?.let { it1 ->
-                Serie(
-                    id = it1.id,  // Asegúrate de incluir esto si tu modelo Serie lo requiere
-                    titulo = binding.sdfinputTitulo.text.toString(),
-                    genero = binding.sdftilGenero.text.toString(),
-                    temporadaActual = binding.inputTemporadaActual.text.toString().toIntOrNull(),
-                    captituloActual = binding.inputCapituloActual.text.toString().toIntOrNull(),
-                    puntuacion = binding.sdfetnPuntuacion.text.toString().toDoubleOrNull(),
-                    fechaProximoEstreno = fechaProximoEstreno,
-                    estadoVisualizacion = binding.sdfspinnerEstadoVisualizacion.selectedItem.toString(),
-                    serieEnEmision = binding.sdfswitchFinalizada.isChecked,
-                    notas = binding.sdfetNotas.text.toString(),
-                    imagenUrl = imagenSeleccionadaBytes ?: it1.imagenUrl,  // ← mantiene imagen original si no se cambia
-                    fechaCreacion = it1.fechaCreacion
-                )
-            }
+
+            val serie = validarDatos()
 
             if (serie != null) {
                 (activity as MainActivity).serieViewModel.actualizarSerie(serie)
                 accion = "ver"
                 actualizarModo()
-                Toast.makeText(requireContext(), "Serie actualizada", Toast.LENGTH_SHORT).show()
+                mostrarMensajePersonalizado("Serie actualizada", R.layout.custom_toast_info)
             }
         }
 
@@ -202,6 +189,84 @@ class SerieDetailFragment : Fragment() {
                 .setNegativeButton("Cancelar") { dialog, _ -> dialog.dismiss() }
                 .show()
         }
+    }
+
+    fun mostrarMensajePersonalizado(message: String, layoutRes: Int) {
+        val toast = Toast(requireContext())
+        val inflater = layoutInflater
+        val layout = inflater.inflate(layoutRes, null)
+
+        val textViewId = if (layoutRes == R.layout.custom_toast_info) {
+            R.id.ctitext
+        } else {
+            R.id.text
+        }
+
+        val text = layout.findViewById<TextView>(textViewId)
+        text?.text = message
+
+        toast.duration = Toast.LENGTH_SHORT
+        toast.view = layout
+        toast.show()
+    }
+
+    fun validarDatos(): Serie? {
+        val errores = StringBuilder()
+
+        if (binding.sdfinputTitulo.text.toString().isBlank()) {
+            errores.append("El campo: Titulo es obligatorio\n")
+            binding.sdfinputTitulo.setBackgroundColor(Color.parseColor("#FFCDD2"))
+        } else {
+            binding.sdfinputTitulo.setBackgroundColor(Color.TRANSPARENT)
+        }
+
+        if (binding.sdftilGenero.text.toString().any { it.isDigit() }) {
+            errores.append("El campo 'Género' no puede contener valores numéricos\n")
+            binding.sdftilGenero.setBackgroundColor(Color.parseColor("#FFCDD2"))
+        } else {
+            binding.sdftilGenero.setBackgroundColor(Color.TRANSPARENT)
+        }
+
+        val formatoFecha = android.icu.text.SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        formatoFecha.isLenient = false // Para que valide fechas incorrectas como 32/01/2024
+
+        if (binding.etFechaEmision.text.toString().isNotBlank()){
+            try {
+                formatoFecha.parse(binding.etFechaEmision.text.toString())
+                if(formatoFecha.parse(binding.etFechaEmision.text.toString()) < Date()){
+                    errores.append("La fecha de emision no puede ser anteror a la fecha actual\n")
+
+                }
+            } catch (e: Exception) {
+                errores.append("El campo 'Fecha Emisión' no tiene un formato de fecha adecuado (dd/MM/yyyy)\n")
+            }
+        }
+
+        // Mostrar errores si hay
+        if (errores.isNotEmpty()) {
+            mostrarMensajePersonalizado(errores.toString(), R.layout.custom_toast_layout)
+            return null
+        }
+
+        // Crear y retornar la serie si todo está bien
+        return serieFiltrada?.let { it1 ->
+            Serie(
+                id = it1.id,  // Asegúrate de incluir esto si tu modelo Serie lo requiere
+                titulo = binding.sdfinputTitulo.text.toString(),
+                genero = binding.sdftilGenero.text.toString(),
+                temporadaActual = binding.inputTemporadaActual.text.toString().toIntOrNull(),
+                captituloActual = binding.inputCapituloActual.text.toString().toIntOrNull(),
+                puntuacion = binding.sdfetnPuntuacion.text.toString().toDoubleOrNull(),
+                fechaProximoEstreno = fechaProximoEstreno,
+                estadoVisualizacion = binding.sdfspinnerEstadoVisualizacion.selectedItem.toString(),
+                serieEnEmision = binding.sdfswitchFinalizada.isChecked,
+                notas = binding.sdfetNotas.text.toString(),
+                imagenUrl = imagenSeleccionadaBytes ?: it1.imagenUrl,  // ← mantiene imagen original si no se cambia
+                fechaCreacion = it1.fechaCreacion
+            )
+        }
+
+
     }
 
     override fun onDestroyView() {

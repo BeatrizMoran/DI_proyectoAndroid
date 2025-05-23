@@ -172,11 +172,9 @@ class SerieCreateFragment : Fragment() {
         return Serie(
             titulo = binding.inputTitulo.text.toString(),
             genero = binding.inputGenero.text.toString(),
-            temporadaActual = binding.inputTemporadaActual.text.toString().toIntOrNull()
-                ?: 0,
-            captituloActual = binding.inputCapituloActual.text.toString().toIntOrNull()
-                ?: 0,
-            puntuacion = binding.scfetnPuntuacion.text.toString().toDoubleOrNull() ?: 0.0,
+            temporadaActual = binding.inputTemporadaActual.text.toString().toIntOrNull(),
+            captituloActual = binding.inputCapituloActual.text.toString().toIntOrNull(),
+            puntuacion = binding.scfetnPuntuacion.text.toString().toDoubleOrNull(),
             fechaProximoEstreno = fechaProximoEstreno,
             estadoVisualizacion = binding.spinnerEstadoUsuario.selectedItem.toString(),
             serieEnEmision = binding.switchFinalizada.isChecked,
