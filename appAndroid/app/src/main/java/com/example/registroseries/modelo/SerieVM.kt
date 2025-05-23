@@ -15,6 +15,10 @@ class SerieVM(private val miRepositorio: Repositorio): ViewModel(){
     fun insertarSerie(miSerie: Serie)=viewModelScope.launch {
         miRepositorio.insertarSerie(miSerie)
     }
+
+    fun actualizarSerie(miSerie: Serie)=viewModelScope.launch {
+        miRepositorio.actualizarSeri(miSerie)
+    }
 }
 
 

@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.example.registroseries.modelo.Serie
 import kotlinx.coroutines.flow.Flow
 
@@ -14,4 +15,7 @@ interface SerieDAO {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertarSerie(miSerie: Serie)
+
+    @Update
+    suspend fun actualizarSerie(miSerie: Serie)
 }

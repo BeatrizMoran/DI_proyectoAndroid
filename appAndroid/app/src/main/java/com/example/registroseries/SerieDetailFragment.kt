@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import com.example.registroseries.databinding.FragmentSerieDetailBinding
 import com.example.registroseries.modelo.Serie
 import com.example.registroseries.modelo.SerieVM
+import com.example.registroseries.utils.mostrarCalendarioConFecha
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -27,6 +28,8 @@ class SerieDetailFragment : Fragment() {
     private var imagenOriginalBytes: ByteArray? = null
     private lateinit var imagePickerLauncher: ActivityResultLauncher<String>
     private var serieFiltrada: Serie? = null
+    private var fechaProximoEstreno: Date? = null
+
 
     private var accion: String = "ver"
 
@@ -77,6 +80,7 @@ class SerieDetailFragment : Fragment() {
 
         serieFiltrada?.let { serie ->
             binding.sdfinputTitulo.setText(serie.titulo)
+            binding.sdfetnPuntuacion.setText(serie.puntuacion?.toString() ?: "")
             binding.sdftilGenero.setText(serie.genero)
             binding.inputTemporadaActual.setText(serie.temporadaActual.toString())
             binding.inputCapituloActual.setText(serie.captituloActual.toString())
@@ -145,6 +149,12 @@ class SerieDetailFragment : Fragment() {
             inicializarDatos()
         }
 
+        binding.etFechaEmision.setOnClickListener {
+            mostrarCalendarioConFecha(requireContext(), binding.etFechaEmision) { fecha ->
+                fechaProximoEstreno = fecha
+            }
+        }
+
         binding.sdfbEditar.setOnClickListener {
             accion = "editar"
             actualizarModo()
@@ -158,8 +168,31 @@ class SerieDetailFragment : Fragment() {
         }
 
         binding.sdfbActualizar.setOnClickListener {
-            // ACTUALIZAR SERIE
+            val serie = serieFiltrada?.let { it1 ->
+                Serie(
+                    id = it1.id,  // Asegúrate de incluir esto si tu modelo Serie lo requiere
+                    titulo = binding.sdfinputTitulo.text.toString(),
+                    genero = binding.sdftilGenero.text.toString(),
+                    temporadaActual = binding.inputTemporadaActual.text.toString().toIntOrNull(),
+                    captituloActual = binding.inputCapituloActual.text.toString().toIntOrNull(),
+                    puntuacion = binding.sdfetnPuntuacion.text.toString().toDoubleOrNull(),
+                    fechaProximoEstreno = fechaProximoEstreno,
+                    estadoVisualizacion = binding.sdfspinnerEstadoVisualizacion.selectedItem.toString(),
+                    serieEnEmision = binding.sdfswitchFinalizada.isChecked,
+                    notas = binding.sdfetNotas.text.toString(),
+                    imagenUrl = imagenSeleccionadaBytes ?: it1.imagenUrl,  // ← mantiene imagen original si no se cambia
+                    fechaCreacion = it1.fechaCreacion
+                )
+            }
+
+            if (serie != null) {
+                (activity as MainActivity).serieViewModel.actualizarSerie(serie)
+                accion = "ver"
+                actualizarModo()
+                Toast.makeText(requireContext(), "Serie actualizada", Toast.LENGTH_SHORT).show()
+            }
         }
+
 
         binding.sdfbBorrar.setOnClickListener {
             AlertDialog.Builder(requireContext())
