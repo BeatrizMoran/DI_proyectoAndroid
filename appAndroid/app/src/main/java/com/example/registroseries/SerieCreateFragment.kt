@@ -20,6 +20,7 @@ import com.example.registroseries.databinding.FragmentSignUpBinding
 import com.example.registroseries.modelo.Serie
 import com.example.registroseries.modelo.Usuario
 import com.example.registroseries.utils.mostrarCalendarioConFecha
+import com.example.registroseries.utils.mostrarMensajePersonalizado
 import java.util.Date
 import java.util.Locale
 
@@ -97,6 +98,10 @@ class SerieCreateFragment : Fragment() {
             if (serie != null) {
 
                 (activity as MainActivity).serieViewModel.insertarSerie(serie)
+                mostrarMensajePersonalizado(
+                    requireContext(),
+                    "Serie creada", R.layout.custom_toast_info
+                )
                 findNavController().navigate(R.id.action_serieCreateFragment_to_seriesListFragment)
 
             }
@@ -111,24 +116,7 @@ class SerieCreateFragment : Fragment() {
 
 
     }
-    fun mostrarMensajePersonalizado(message: String, layoutRes: Int) {
-        val toast = Toast(requireContext())
-        val inflater = layoutInflater
-        val layout = inflater.inflate(layoutRes, null)
 
-        val textViewId = if (layoutRes == R.layout.custom_toast_info) {
-            R.id.ctitext
-        } else {
-            R.id.text
-        }
-
-        val text = layout.findViewById<TextView>(textViewId)
-        text?.text = message
-
-        toast.duration = Toast.LENGTH_SHORT
-        toast.view = layout
-        toast.show()
-    }
 
     fun validarDatos(): Serie? {
         val errores = StringBuilder()
@@ -164,7 +152,10 @@ class SerieCreateFragment : Fragment() {
 
         // Mostrar errores si hay
         if (errores.isNotEmpty()) {
-            mostrarMensajePersonalizado(errores.toString(), R.layout.custom_toast_layout)
+            mostrarMensajePersonalizado(
+                requireContext(),
+                errores.toString(), R.layout.custom_toast_layout
+            )
             return null
         }
 

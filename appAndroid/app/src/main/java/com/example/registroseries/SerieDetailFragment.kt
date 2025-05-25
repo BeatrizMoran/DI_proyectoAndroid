@@ -12,10 +12,12 @@ import android.widget.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.registroseries.databinding.FragmentSerieDetailBinding
 import com.example.registroseries.modelo.Serie
 import com.example.registroseries.modelo.SerieVM
 import com.example.registroseries.utils.mostrarCalendarioConFecha
+import com.example.registroseries.utils.mostrarMensajePersonalizado
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -176,7 +178,10 @@ class SerieDetailFragment : Fragment() {
                 (activity as MainActivity).serieViewModel.actualizarSerie(serie)
                 accion = "ver"
                 actualizarModo()
-                mostrarMensajePersonalizado("Serie actualizada", R.layout.custom_toast_info)
+                mostrarMensajePersonalizado(
+                    requireContext(),
+                    "Serie actualizada", R.layout.custom_toast_info
+                )
             }
         }
 
@@ -185,30 +190,21 @@ class SerieDetailFragment : Fragment() {
             AlertDialog.Builder(requireContext())
                 .setTitle("Confirmación")
                 .setMessage("¿Estás seguro de que quieres borrar la serie?")
-                .setPositiveButton("Aceptar") { dialog, _ -> dialog.dismiss() }
+                .setPositiveButton("Aceptar") { dialog, _ -> dialog.dismiss()
+                    serieFiltrada?.let { it1 -> viewModel.borrarSerie(it1)
+                        mostrarMensajePersonalizado(
+                            requireContext(),
+                            "Serie borrada", R.layout.custom_toast_info
+                        )
+                        findNavController().navigate(R.id.action_serieDetailFragment_to_seriesListFragment)
+                    }
+                }
                 .setNegativeButton("Cancelar") { dialog, _ -> dialog.dismiss() }
                 .show()
         }
     }
 
-    fun mostrarMensajePersonalizado(message: String, layoutRes: Int) {
-        val toast = Toast(requireContext())
-        val inflater = layoutInflater
-        val layout = inflater.inflate(layoutRes, null)
 
-        val textViewId = if (layoutRes == R.layout.custom_toast_info) {
-            R.id.ctitext
-        } else {
-            R.id.text
-        }
-
-        val text = layout.findViewById<TextView>(textViewId)
-        text?.text = message
-
-        toast.duration = Toast.LENGTH_SHORT
-        toast.view = layout
-        toast.show()
-    }
 
     fun validarDatos(): Serie? {
         val errores = StringBuilder()
@@ -244,7 +240,10 @@ class SerieDetailFragment : Fragment() {
 
         // Mostrar errores si hay
         if (errores.isNotEmpty()) {
-            mostrarMensajePersonalizado(errores.toString(), R.layout.custom_toast_layout)
+            mostrarMensajePersonalizado(
+                requireContext(),
+                errores.toString(), R.layout.custom_toast_layout
+            )
             return null
         }
 

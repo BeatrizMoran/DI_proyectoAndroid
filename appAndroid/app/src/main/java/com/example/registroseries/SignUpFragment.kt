@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.registroseries.databinding.FragmentLoginBinding
 import com.example.registroseries.databinding.FragmentSignUpBinding
 import com.example.registroseries.modelo.Usuario
+import com.example.registroseries.utils.mostrarMensajePersonalizado
 
 
 class SignUpFragment : Fragment() {
@@ -32,24 +33,7 @@ class SignUpFragment : Fragment() {
 
     }
 
-    private fun mostrarMensajePersonalizado(message: String, layoutRes: Int) {
-        val toast = Toast(requireContext())
-        val inflater = layoutInflater
-        val layout = inflater.inflate(layoutRes, null)
 
-        val textViewId = if (layoutRes == R.layout.custom_toast_info) {
-            R.id.ctitext
-        } else {
-            R.id.text
-        }
-
-        val text = layout.findViewById<TextView>(textViewId)
-        text?.text = message
-
-        toast.duration = Toast.LENGTH_SHORT
-        toast.view = layout
-        toast.show()
-    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -60,7 +44,9 @@ class SignUpFragment : Fragment() {
 
             if (usuario != null) {
                 (activity as MainActivity).signUpVM.registrarUsuario(usuario)
-                mostrarMensajePersonalizado("Usuario registrado correctamente. Inicia sesión", R.layout.custom_toast_info)
+                mostrarMensajePersonalizado(requireContext(),
+                    "Usuario registrado correctamente. Inicia sesión",
+                    R.layout.custom_toast_info)
 
 
                 // Navega al siguiente fragmento
@@ -109,7 +95,9 @@ class SignUpFragment : Fragment() {
 
         // Mostrar errores si hay
         if (errores.isNotEmpty()) {
-            mostrarMensajePersonalizado(errores.toString(), R.layout.custom_toast_layout)
+            mostrarMensajePersonalizado(requireContext(),
+                errores.toString(),
+                R.layout.custom_toast_layout)
             return null
         }
 

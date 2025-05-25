@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.registroseries.databinding.FragmentFirstBinding
 import com.example.registroseries.databinding.FragmentLoginBinding
+import com.example.registroseries.utils.mostrarMensajePersonalizado
 
 
 class LoginFragment : Fragment() {
@@ -29,24 +30,7 @@ class LoginFragment : Fragment() {
 
     }
 
-    private fun mostrarMensajePersonalizado(message: String, layoutRes: Int) {
-        val toast = Toast(requireContext())
-        val inflater = layoutInflater
-        val layout = inflater.inflate(layoutRes, null)
 
-        val textViewId = if (layoutRes == R.layout.custom_toast_info) {
-            R.id.ctitext
-        } else {
-            R.id.text
-        }
-
-        val text = layout.findViewById<TextView>(textViewId)
-        text?.text = message
-
-        toast.duration = Toast.LENGTH_SHORT
-        toast.view = layout
-        toast.show()
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -71,7 +55,10 @@ class LoginFragment : Fragment() {
         val password = binding.lftvPassword.text.toString()
 
         if (email.isBlank() || password.isBlank()) {
-            mostrarMensajePersonalizado("Debes completar ambos campos", R.layout.custom_toast_layout)
+            mostrarMensajePersonalizado(
+                requireContext(),
+                "Debes completar ambos campos", R.layout.custom_toast_layout
+            )
             return
         }
 
@@ -81,7 +68,8 @@ class LoginFragment : Fragment() {
             //findNavController().navigate(R.id.action_loginFragment_to_seriesListFragment)
             findNavController().navigate(R.id.action_loginFragment_to_dashboardFragment)
         }else{
-            mostrarMensajePersonalizado("Usuario o contraseña incorrectos", R.layout.custom_toast_layout)
+            mostrarMensajePersonalizado(requireContext(),
+                "Usuario o contraseña incorrectos", R.layout.custom_toast_layout)
         }
 
 

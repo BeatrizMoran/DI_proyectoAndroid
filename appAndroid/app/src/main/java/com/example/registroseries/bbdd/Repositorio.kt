@@ -17,4 +17,8 @@ class Repositorio(val miDAO: SerieDAO){
     suspend fun actualizarSeri(miSerie: Serie){
         miDAO.actualizarSerie(miSerie)
     }
+
+    suspend fun borrarSerie(miSerie: Serie){
+        miDAO.borrarSerie(miSerie)
+    }
 }

@@ -1,69 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginFragment" >
-
-    <EditText
-        android:id="@+id/lftvEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="228dp"
-        android:backgroundTint="@color/rojo"
-        android:ems="10"
-        android:hint="@string/usuario"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/lftvPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:backgroundTint="@color/rojo"
-        android:ems="10"
-        android:hint="@string/contrase_a"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lftvEmail" />
-
-    <Button
-        android:id="@+id/lfbLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="204dp"
-        android:backgroundTint="@color/rojo"
-        android:text="@string/iniciar_sesion"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lftvEmail" />
-
+    android:padding="24dp">
     <TextView
-        android:id="@+id/lftvIrSignUp"
+        android:id="@+id/scftvTitulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="21dp"
-        android:autoLink="none"
-        android:clickable="true"
-        android:focusable="true"
-        android:paddingTop="16dp"
-        android:text="¿Todavia no tienes cuenta? Registrate!"
-        android:textColor="@android:color/holo_blue_dark"
-        android:textSize="12sp"
+        android:text="Iniciar sesión"
+        android:textSize="25sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/lfbLogin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
+        android:layout_marginTop="40dp"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lftvPassword"
-        app:layout_constraintVertical_bias="0.4" />
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    <LinearLayout
+        android:id="@+id/loginContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_margin="16dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+
+
+        <EditText
+            android:id="@+id/lftvEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:hint="@string/usuario"
+            android:inputType="textEmailAddress"
+            android:backgroundTint="@color/rojo"
+            android:padding="12dp"
+            android:layout_marginBottom="25dp" />
+
+        <EditText
+            android:id="@+id/lftvPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:hint="@string/contrase_a"
+            android:inputType="textPassword"
+            android:backgroundTint="@color/rojo"
+            android:padding="12dp"
+            android:layout_marginBottom="25dp" />
+
+        <TextView
+            android:id="@+id/lftvIrSignUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¿Todavía no tienes cuenta? ¡Regístrate!"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_gravity="center"
+            android:padding="12dp"
+            android:layout_marginBottom="25dp"/>
+
+        <Button
+            android:id="@+id/lfbLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:text="@string/iniciar_sesion"
+            android:backgroundTint="@color/rojo"
+            android:padding="12dp" />
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -36,7 +36,7 @@
 
         <Button
             android:id="@+id/sdfbEditar"
-            android:layout_width="48dp"
+            android:layout_width="55dp"
             android:layout_height="48dp"
             android:drawableTop="@drawable/ic_edit"
             android:text=""
@@ -55,15 +55,21 @@
             app:backgroundTint="@color/rojo"
             android:visibility="gone"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/sdfbBorrar"
-            android:layout_width="48dp"
+            android:layout_width="55dp"
             android:layout_height="48dp"
-            android:drawableTop="@drawable/ic_clear"
             android:text=""
+            android:padding="15dp"
+            android:backgroundTint="@color/rojo"
+            app:icon="@drawable/ic_basura"
+            app:iconTint="@android:color/black"
+            app:iconSize="26dp"
+
             android:gravity="center"
-            android:padding="8dp"
-            app:backgroundTint="@color/rojo" />
+            />
+
+
 
     </LinearLayout>
 

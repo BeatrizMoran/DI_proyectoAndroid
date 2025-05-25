@@ -42,7 +42,11 @@
         android:id="@+id/serieDetailFragment"
         android:name="com.example.registroseries.SerieDetailFragment"
         android:label="fragment_serie_detail"
-        tools:layout="@layout/fragment_serie_detail" />
+        tools:layout="@layout/fragment_serie_detail" >
+        <action
+            android:id="@+id/action_serieDetailFragment_to_seriesListFragment"
+            app:destination="@id/seriesListFragment" />
+    </fragment>
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.example.registroseries.SignUpFragment"

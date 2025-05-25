@@ -12,6 +12,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.registroseries.databinding.FragmentDashboardBinding
 import com.example.registroseries.modelo.Serie
 import com.example.registroseries.recyclerView.CarruselSeriesAdaptador
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -89,6 +90,8 @@ class DashboardFragment : Fragment() {
 
         binding.btnAddSerie.setOnClickListener {
             findNavController().navigate(R.id.action_dashboardFragment_to_serieCreateFragment)
+            (activity as MainActivity).findViewById<BottomNavigationView>(R.id.bottom_navigation)
+                .selectedItemId = R.id.action_crear_serie
         }
 
 

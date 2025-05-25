@@ -19,6 +19,10 @@ class SerieVM(private val miRepositorio: Repositorio): ViewModel(){
     fun actualizarSerie(miSerie: Serie)=viewModelScope.launch {
         miRepositorio.actualizarSeri(miSerie)
     }
+
+    fun borrarSerie(miSerie: Serie)=viewModelScope.launch {
+        miRepositorio.borrarSerie(miSerie)
+    }
 }
 
 
