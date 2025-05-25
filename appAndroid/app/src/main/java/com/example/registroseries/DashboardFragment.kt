@@ -111,6 +111,7 @@ class DashboardFragment : Fragment() {
         binding.tvSeriesTotales.text = "Series totales: $numeroSeries"
         binding.tvSeriesPendientes.text = "Series pendientes: $seriesPendientes"
         binding.tvSeriesVistas.text = "Series vistas: $seriesVistas"
+        binding.tvSeriesAbandonadas.text = "series abandonadas: $seriesAbandonadas"
     }
 
 

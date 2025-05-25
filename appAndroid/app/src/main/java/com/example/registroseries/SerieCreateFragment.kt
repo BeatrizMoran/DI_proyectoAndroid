@@ -128,6 +128,16 @@ class SerieCreateFragment : Fragment() {
             binding.scftvTitulo.setBackgroundColor(Color.TRANSPARENT)
         }
 
+        val puntuacion = binding.scfetnPuntuacion.text.toString().toDoubleOrNull()
+
+        if (puntuacion != null && (puntuacion < 0.0 || puntuacion > 10.0)) {
+            errores.append("La puntuación debe estar entre 0 y 10\n")
+            binding.scfetnPuntuacion.setBackgroundColor(Color.parseColor("#FFCDD2"))
+        } else {
+            binding.scfetnPuntuacion.setBackgroundColor(Color.TRANSPARENT)
+        }
+
+
         if (binding.inputGenero.text.toString().any { it.isDigit() }) {
             errores.append("El campo 'Género' no puede contener valores numéricos\n")
             binding.inputGenero.setBackgroundColor(Color.parseColor("#FFCDD2"))

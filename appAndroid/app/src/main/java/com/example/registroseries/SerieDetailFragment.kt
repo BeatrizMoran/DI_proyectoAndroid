@@ -47,16 +47,33 @@ class SerieDetailFragment : Fragment() {
     private fun setInputsEditable(parent: ViewGroup, editable: Boolean) {
         for (i in 0 until parent.childCount) {
             val view = parent.getChildAt(i)
+
             when (view) {
-                is EditText -> view.isEnabled = editable
-                is Spinner -> view.isEnabled = editable
-                is Switch -> view.isEnabled = editable
-                is CheckBox -> view.isEnabled = editable
-                is ImageView -> view.isEnabled = editable
+                is EditText -> {
+                    view.isEnabled = editable
+                    view.setBackgroundColor(Color.TRANSPARENT) // Restaurar fondo
+                }
+                is Spinner -> {
+                    view.isEnabled = editable
+                    view.setBackgroundColor(Color.TRANSPARENT)
+                }
+                is Switch -> {
+                    view.isEnabled = editable
+                    view.setBackgroundColor(Color.TRANSPARENT)
+                }
+                is CheckBox -> {
+                    view.isEnabled = editable
+                    view.setBackgroundColor(Color.TRANSPARENT)
+                }
+                is ImageView -> {
+                    view.isEnabled = editable
+                    // No suele tener fondo de error, no hace falta cambiar color
+                }
                 is ViewGroup -> setInputsEditable(view, editable)
             }
         }
     }
+
 
     private fun actualizarModo() {
         val editable = accion == "editar"
@@ -214,6 +231,15 @@ class SerieDetailFragment : Fragment() {
             binding.sdfinputTitulo.setBackgroundColor(Color.parseColor("#FFCDD2"))
         } else {
             binding.sdfinputTitulo.setBackgroundColor(Color.TRANSPARENT)
+        }
+
+        val puntuacion = binding.sdfetnPuntuacion.text.toString().toDoubleOrNull()
+
+        if (puntuacion != null && (puntuacion < 0.0 || puntuacion > 10.0)) {
+            errores.append("La puntuación debe estar entre 0 y 10\n")
+            binding.sdfetnPuntuacion.setBackgroundColor(Color.parseColor("#FFCDD2"))
+        } else {
+            binding.sdfetnPuntuacion.setBackgroundColor(Color.TRANSPARENT)
         }
 
         if (binding.sdftilGenero.text.toString().any { it.isDigit() }) {

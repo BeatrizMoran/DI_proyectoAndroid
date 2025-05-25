@@ -6,6 +6,14 @@
         <item>Abandonada</item>
     </string-array>
 
+    <string-array name="filtrosSerie_array">
+        <item>Todas</item>
+        <item>Viendo</item>
+        <item>Terminada</item>
+        <item>Pendiente</item>
+        <item>Abandonada</item>
+    </string-array>
+
     <string name="app_name">registroSeries</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
