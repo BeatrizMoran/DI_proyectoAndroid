@@ -1,5 +1,6 @@
 package com.example.registroseries
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -67,6 +68,15 @@ class MainActivity : AppCompatActivity() {
 
         //menu de abajo
        accionesBottomNavMenu()
+
+        //Si esta logueado redirigir al dashboard, si no al login
+        if (loginVM.isUserLoggedIn()){
+            findNavController(R.id.nav_host_fragment_content_main)
+                .navigate(R.id.dashboardFragment)
+        }else{
+            findNavController(R.id.nav_host_fragment_content_main)
+                .navigate(R.id.loginFragment)
+        }
     }
 
     fun accionesBottomNavMenu(){
@@ -96,7 +106,7 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.bottom_nav_menu, menu)
+        menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
 
@@ -117,6 +127,12 @@ class MainActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.action_settings -> {
                 Toast.makeText(this, "Configuraciones", Toast.LENGTH_LONG).show()
+                true
+            }
+            R.id.action_logout -> {
+                loginVM.logout()
+                findNavController(R.id.nav_host_fragment_content_main)
+                    .navigate(R.id.loginFragment)
                 true
             }
 

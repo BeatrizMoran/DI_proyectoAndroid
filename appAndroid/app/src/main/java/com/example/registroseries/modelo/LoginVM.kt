@@ -2,6 +2,7 @@ package com.example.registroseries.modelo
 
 import android.app.Application
 import android.content.Context
+import android.content.Intent
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -38,4 +39,6 @@ class LoginVM(application: Application) : AndroidViewModel(application) {
     fun logout() {
         user.edit().putBoolean("is_logged_in", false).apply()
     }
+
+
 }
