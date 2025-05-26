@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -30,7 +31,10 @@ class SerieCreateFragment : Fragment() {
     private lateinit var imagePickerLauncher: ActivityResultLauncher<String>
     private var fechaProximoEstreno: Date? = null
 
+    private var estadoVisualizacion: String = "Viendo"
+
     private var imagenSeleccionadaBytes: ByteArray? = null // almacena la imagen para la serie
+    private var serieEnEMision: Boolean = false
 
 
     // This property is only valid between onCreateView and
@@ -61,6 +65,12 @@ class SerieCreateFragment : Fragment() {
         val etFechaEmision = binding.etFechaEmision
         val ivImagen = binding.ivImagen
         val subirImagen = binding.scfllImagen
+        val cbProgresoSerie = binding.scfcbProgresoSerie
+
+        binding.scfcbProgresoSerie.visibility = if (estadoVisualizacion == "Viendo") View.VISIBLE else View.GONE
+
+        binding.scfcbFechaEmision.visibility = if (serieEnEMision) View.VISIBLE else View.GONE
+
 
 
         // Registrar launcher para seleccionar imagen
@@ -90,6 +100,11 @@ class SerieCreateFragment : Fragment() {
             etFechaEmision.visibility = if (isChecked) View.VISIBLE else View.GONE
         }
 
+        cbProgresoSerie.setOnCheckedChangeListener { _, isChecked ->
+            binding.scfllProgresoTemporadaCapitulo.visibility = if (isChecked) View.VISIBLE else View.GONE
+        }
+
+
 
 
         binding.btnCrearSerie.setOnClickListener {
@@ -108,11 +123,31 @@ class SerieCreateFragment : Fragment() {
 
 
 
+
+
             /*
         binding.suftvIrLogin.setOnClickListener {
             findNavController().navigate(R.id.action_signUpFragment_to_loginFragment)
         }*/
         }
+        binding.spinnerEstadoUsuario.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                estadoVisualizacion = parent.getItemAtPosition(position).toString()
+                binding.scfcbProgresoSerie.visibility = if (estadoVisualizacion == "Viendo") View.VISIBLE else View.GONE
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+
+            }
+        }
+
+        binding.switchFinalizada.setOnCheckedChangeListener { _, isChecked ->
+            serieEnEMision = isChecked
+            binding.scfcbFechaEmision.visibility = if (serieEnEMision) View.VISIBLE else View.GONE
+
+        }
+
+
 
 
     }

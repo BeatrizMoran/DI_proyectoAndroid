@@ -99,12 +99,28 @@
                 android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Estado visualizacion -->
+        <Spinner
+            android:id="@+id/spinnerEstadoUsuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:entries="@array/estados_visualizacionSerie_array"/>
+
+        <CheckBox
+            android:id="@+id/scfcbProgresoSerie"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Guardar progreso de la serie (Temporada/Capítulo) " />
         <!-- Título -->
         <LinearLayout
+            android:id="@+id/scfllProgresoTemporadaCapitulo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="1"
+            android:visibility="gone"
+
             >
 
             <!-- Título (80% del espacio) -->
@@ -141,13 +157,6 @@
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
-        <!-- Estado usuario -->
-        <Spinner
-            android:id="@+id/spinnerEstadoUsuario"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:entries="@array/estados_visualizacionSerie_array"/>
 
 
 

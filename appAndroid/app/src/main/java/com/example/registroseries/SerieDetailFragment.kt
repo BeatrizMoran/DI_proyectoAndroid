@@ -33,6 +33,9 @@ class SerieDetailFragment : Fragment() {
     private var serieFiltrada: Serie? = null
     private var fechaProximoEstreno: Date? = null
 
+    private var serieEnEmision: Boolean = false
+    private var estadoVisualizacion: String = "Viendo"
+
 
     private var accion: String = "ver"
 
@@ -105,6 +108,10 @@ class SerieDetailFragment : Fragment() {
             binding.inputTemporadaActual.setText( if (serie.temporadaActual != null) serie.temporadaActual.toString() else (""))
             binding.inputCapituloActual.setText(if(serie.captituloActual != null) serie.captituloActual.toString() else(""))
 
+
+            if (serie.temporadaActual != null){
+                binding.sdfcbProgresoSerie.isChecked = true
+            }
             // Spinner
             val adapter = spinner.adapter
             val estadoActual = serie.estadoVisualizacion
@@ -121,8 +128,12 @@ class SerieDetailFragment : Fragment() {
             binding.sdfswitchFinalizada.isChecked = serie.serieEnEmision ?: false
 
             // Fecha
-            binding.etFechaEmision.hint =
-                serie.fechaProximoEstreno?.let { formatoFecha(it) } ?: "No próxima fecha de emisión"
+            if (serie.fechaProximoEstreno == null) {
+                binding.etFechaEmision.hint = "Sin próxima fecha de emisión"
+            } else {
+                binding.etFechaEmision.setText(formatoFecha(serie.fechaProximoEstreno!!))
+            }
+
 
 
             // Notas
@@ -152,6 +163,14 @@ class SerieDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val cbProgresoSerie = binding.sdfcbProgresoSerie
+
+        binding.sdfcbProgresoSerie.visibility = if (estadoVisualizacion == "Viendo") View.VISIBLE else View.GONE
+
+        binding.etFechaEmision.visibility = if (serieEnEmision) View.VISIBLE else View.GONE
+
+
 
         imagePickerLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             uri?.let {
@@ -219,6 +238,37 @@ class SerieDetailFragment : Fragment() {
                 .setNegativeButton("Cancelar") { dialog, _ -> dialog.dismiss() }
                 .show()
         }
+
+        binding.sdfswitchFinalizada.setOnCheckedChangeListener { _, isChecked ->
+            serieEnEmision = isChecked
+            binding.etFechaEmision.visibility = if (serieEnEmision) View.VISIBLE else View.GONE
+
+        }
+
+        cbProgresoSerie.setOnCheckedChangeListener { _, isChecked ->
+            binding.sdfllprogresoTemporadaCapitulo.visibility = if (isChecked) View.VISIBLE else View.GONE
+        }
+
+        binding.sdfspinnerEstadoVisualizacion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                estadoVisualizacion = parent.getItemAtPosition(position).toString()
+                val esViendo = estadoVisualizacion == "Viendo"
+
+                binding.sdfcbProgresoSerie.visibility = if (esViendo) View.VISIBLE else View.GONE
+
+                // Oculta el layout si ya no está en "Viendo"
+                if (!esViendo) {
+                    binding.sdfcbProgresoSerie.isChecked = false
+                    binding.inputTemporadaActual.setText("")
+                    binding.inputCapituloActual.setText("")
+                    binding.sdfllprogresoTemporadaCapitulo.visibility = View.GONE
+                    binding.sdfcbProgresoSerie.isChecked = false // opcional, para evitar incoherencias
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+
     }
 
 
