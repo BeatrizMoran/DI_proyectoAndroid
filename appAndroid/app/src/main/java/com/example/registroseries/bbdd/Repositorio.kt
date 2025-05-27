@@ -21,4 +21,8 @@ class Repositorio(val miDAO: SerieDAO){
     suspend fun borrarSerie(miSerie: Serie){
         miDAO.borrarSerie(miSerie)
     }
+    suspend fun borrarTodasLasSeries(){
+        miDAO.borrarTodasLasSeries()
+    }
+
 }

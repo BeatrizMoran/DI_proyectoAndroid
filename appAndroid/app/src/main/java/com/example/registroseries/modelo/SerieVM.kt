@@ -35,3 +35,4 @@ class SerieViewModelFactory(private val miRepositorio: Repositorio): ViewModelPr
         throw IllegalArgumentException("ViewModel class desconocida")
     }
 }
+

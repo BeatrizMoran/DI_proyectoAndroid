@@ -21,6 +21,7 @@ import com.example.registroseries.bbdd.BBDD
 import com.example.registroseries.bbdd.Repositorio
 import com.example.registroseries.modelo.SerieVM
 import com.example.registroseries.modelo.SerieViewModelFactory
+import com.example.registroseries.modelo.SignUpViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -35,7 +36,7 @@ class MainActivity : AppCompatActivity() {
     //var series: MutableList<Serie> = mutableListOf()
 
     val loginVM:LoginVM by viewModels()
-    val signUpVM: SignUpVM by viewModels()
+    val signUpVM: SignUpVM by viewModels{SignUpViewModelFactory(application, miRepositorio)}
 
 
     //usuario con sharedPreferences

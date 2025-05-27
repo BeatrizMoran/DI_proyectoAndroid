@@ -6,9 +6,15 @@ import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.example.registroseries.MainActivity
+import com.example.registroseries.bbdd.Repositorio
+import com.example.registroseries.bbdd.SerieDAO
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class SignUpVM(application: Application) : AndroidViewModel(application) {
+class SignUpVM(application: Application, private val miRepositorio: Repositorio) : AndroidViewModel(application) {
 
     private val sharedPreferences: SharedPreferences = application.getSharedPreferences("usuario", Context.MODE_PRIVATE)
 
@@ -19,6 +25,12 @@ class SignUpVM(application: Application) : AndroidViewModel(application) {
         editor.putString("email", usuario.email)
         editor.putString("password", usuario.password)
         editor.apply()
+
+        // Borrar las series de la base de datos (por si eran del usuario anterior)
+        CoroutineScope(Dispatchers.IO).launch {
+            miRepositorio.borrarTodasLasSeries()
+        }
+
     }
 
     fun obtenerUsuario(): Usuario? {
@@ -32,5 +44,18 @@ class SignUpVM(application: Application) : AndroidViewModel(application) {
         } else {
             null
         }
+    }
+}
+
+class SignUpViewModelFactory(
+    private val application: Application,
+    private val miRepositorio: Repositorio
+) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(SignUpVM::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return SignUpVM(application, miRepositorio) as T
+        }
+        throw IllegalArgumentException("ViewModel class desconocida")
     }
 }

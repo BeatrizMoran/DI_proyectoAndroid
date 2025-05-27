@@ -1,5 +1,6 @@
 package com.example.registroseries
 
+import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
 import android.util.TypedValue
@@ -40,18 +41,27 @@ class SignUpFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.sufbSignUp.setOnClickListener {
-            val usuario = validarDatos()
+            AlertDialog.Builder(requireContext())
+                .setTitle("Confirmación")
+                .setMessage("Al crear unanueva cuenta, se borraran todos los datos de la cuenta anterior si tiene")
+                .setPositiveButton("Aceptar") { dialog, _ -> dialog.dismiss()
+                    val usuario = validarDatos()
 
-            if (usuario != null) {
-                (activity as MainActivity).signUpVM.registrarUsuario(usuario)
-                mostrarMensajePersonalizado(requireContext(),
-                    "Usuario registrado correctamente. Inicia sesión",
-                    R.layout.custom_toast_info)
+                    if (usuario != null) {
+                        (activity as MainActivity).signUpVM.registrarUsuario(usuario)
+                        mostrarMensajePersonalizado(requireContext(),
+                            "Usuario registrado correctamente. Inicia sesión",
+                            R.layout.custom_toast_info)
 
 
-                // Navega al siguiente fragmento
-                findNavController().navigate(R.id.action_signUpFragment_to_loginFragment)
-            }
+                        // Navega al siguiente fragmento
+                        findNavController().navigate(R.id.action_signUpFragment_to_loginFragment)
+                    }
+                }
+                .setNegativeButton("Cancelar") { dialog, _ -> dialog.dismiss()
+                }
+                .show()
+
         }
 
         binding.suftvIrLogin.setOnClickListener {

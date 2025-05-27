@@ -9,22 +9,19 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class LoginVM(application: Application) : AndroidViewModel(application) {
-   //private val _loginExitoso = MutableLiveData<Boolean>()
-    //val loginExitoso: LiveData<Boolean> get() = _loginExitoso
+
     var loginExitoso: Boolean = false
 
     private val user = application.getSharedPreferences("usuario", Context.MODE_PRIVATE)
 
-    private val emailValido =  user.getString("email", "")
-
-    private val passwdValido = user.getString("password", "")
-
     fun login(email: String, password: String) {
-        if (email == emailValido && password == passwdValido) {
+        val emailValido = user.getString("email", "")
+        val passwdValido = user.getString("password", "")
+
+        loginExitoso = (email == emailValido && password == passwdValido)
+
+        if (loginExitoso) {
             saveSession(true)
-            loginExitoso = true
-        } else {
-            loginExitoso = false
         }
     }
 
@@ -39,6 +36,4 @@ class LoginVM(application: Application) : AndroidViewModel(application) {
     fun logout() {
         user.edit().putBoolean("is_logged_in", false).apply()
     }
-
-
 }

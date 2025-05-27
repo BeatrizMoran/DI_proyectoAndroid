@@ -14,6 +14,10 @@ interface SerieDAO {
     @Query("SELECT * FROM Series ORDER BY fechaCreacion")
     fun mostrarSeries(): Flow<List<Serie>>
 
+    @Query("DELETE FROM series")
+    suspend fun borrarTodasLasSeries()
+
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertarSerie(miSerie: Serie)
 
