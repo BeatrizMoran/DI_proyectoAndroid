@@ -16,6 +16,8 @@ class CarruselSeriesAdaptador (
     private val onSerieClick: (Serie) -> Unit
     ) : RecyclerView.Adapter<CarruselSeriesAdaptador.UltimasSeriesViewHolder>() {
 
+
+
         // Cantidad de grupos (slides) de 3 series
         override fun getItemCount(): Int = Math.ceil(seriesList.size / 3.0).toInt()
 

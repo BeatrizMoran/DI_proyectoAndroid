@@ -22,6 +22,7 @@ class SeriesListFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
     private var estadoVisualizacionFiltro: String = "Todas"
+    private var ordenSeries: String = "reciente"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,10 +40,21 @@ class SeriesListFragment : Fragment() {
 
         mostrarSeries()
 
-
+        //Filtro series por estado visualizacion
         binding.slfsFiltroSeries.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 estadoVisualizacionFiltro = parent.getItemAtPosition(position).toString()
+                mostrarSeries()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+
+            }
+        }
+        //Filtro orden series
+        binding.slfsOrdenSeries.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                ordenSeries = parent.getItemAtPosition(position).toString()
                 mostrarSeries()
             }
 
@@ -62,15 +74,29 @@ class SeriesListFragment : Fragment() {
         binding.tfrvSeries.adapter = adaptador
 
         (activity as MainActivity).serieViewModel.listaSeries.observe(viewLifecycleOwner) { lista ->
-            var listaSeries = lista.sortedByDescending { it.fechaCreacion }
 
-            if (estadoVisualizacionFiltro != "Todas") {
-                listaSeries = lista.filter { it.estadoVisualizacion == estadoVisualizacionFiltro }
+            binding.cardSinSeries.visibility = if (lista.isEmpty()) View.VISIBLE else View.GONE
+
+            // 1. Filtrar si es necesario
+            val filtradas = if (estadoVisualizacionFiltro != "Todas") {
+                lista.filter { it.estadoVisualizacion == estadoVisualizacionFiltro }
+            } else {
+                lista
             }
 
+            // 2. Ordenar según selección
+            val ordenadas = when (ordenSeries) {
+                "Fecha de creación (más reciente)" -> filtradas.sortedByDescending { it.fechaCreacion }
+                "Fecha de creación (más antigua)" -> filtradas.sortedBy { it.fechaCreacion }
+                "Puntuación (mayor primero)" -> filtradas.sortedByDescending { it.puntuacion }
+                "Puntuación (menor primero)" -> filtradas.sortedBy { it.puntuacion }
+                else -> filtradas
+            }
 
-            adaptador.submitList(listaSeries)
+            // 3. Mostrar lista en el RecyclerView
+            adaptador.submitList(ordenadas)
         }
+
     }
 
     override fun onDestroyView() {
