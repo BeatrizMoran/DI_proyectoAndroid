@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:layout_marginVertical="10dp">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -38,57 +39,35 @@
                     android:layout_marginTop="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
             </LinearLayout>
+
         </androidx.cardview.widget.CardView>
 
         <!-- carrusel ultimas series -->
-        <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
+        <TextView
+            android:id="@+id/dftvTituloUltimasSeries"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-            <TextView
-                android:id="@+id/tvUltimasSeriesTitulo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Últimas series añadidas"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="8dp"/>
-
-            <ProgressBar
-                android:id="@+id/progressBarLoading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:layout_gravity="center"
-                android:indeterminateTint="@color/rojo"
-                />
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/viewPagerUltimasSeries"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                />
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabLayoutDots"
-                android:layout_width="30dp"
-                android:layout_height="15dp"
-                android:layout_gravity="center"
-                app:tabGravity="center"
-                app:tabIndicatorHeight="0dp"
-                app:tabBackground="@drawable/tab_background_selector"
-                app:tabIndicatorColor="@android:color/transparent"
-                app:tabRippleColor="@android:color/transparent"
-                app:tabMaxWidth="10dp"
-                app:tabMinWidth="1dp"
-                app:tabPadding="0dp"
-                app:tabTextColor="@android:color/transparent" />
-
-
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="Ultimas series añadidas"
+            android:textStyle="bold"
+            android:gravity="center_horizontal"
+            android:paddingTop="30dp"/>
+        <LinearLayout
+            android:id="@+id/contenedorSeries"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:weightSum="3"
+            >
 
         </LinearLayout>
+
 
         <!-- Otra card: estadísticas -->
         <androidx.cardview.widget.CardView

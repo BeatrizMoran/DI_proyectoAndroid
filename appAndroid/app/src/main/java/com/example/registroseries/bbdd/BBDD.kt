@@ -13,7 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.Date
 
-@Database(entities = [Serie::class], version = 3, exportSchema = false)
+@Database(entities = [Serie::class], version = 4, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class BBDD : RoomDatabase() {
     abstract fun miDAO(): SerieDAO

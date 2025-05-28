@@ -1,98 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rviClPrincipal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="16dp"
-    android:background="@color/white"
-    android:orientation="vertical">
+    android:layout_margin="12dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
+    android:foreground="?android:attr/selectableItemBackground">
 
     <LinearLayout
-        android:id="@+id/rviClContenido"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:background="@color/white">
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:gravity="center_vertical">
 
+        <!-- Imagen -->
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="80dp"
             android:layout_height="100dp"
-            android:layout_margin="8dp"
+            android:layout_marginEnd="12dp"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/serie_default_image" />
+            android:src="@drawable/serie_default_image" />
 
+        <!-- Info -->
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="144dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+            <TextView
+                android:id="@+id/tvisTituloSerie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/titulo_serie"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:maxLines="2"
+                android:ellipsize="end" />
 
-                <TextView
-                    android:id="@+id/tvisTituloSerie"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/titulo_serie"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/tvisCategoriaSerie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/categoria_serie"
+                android:textSize="14sp"
+                android:layout_marginTop="4dp" />
 
-                <TextView
-                    android:id="@+id/tvisCategoriaSerie"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/categoria_serie"
-                    android:textSize="14sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvisTituloSerie" />
+            <TextView
+                android:id="@+id/tvisEstadoSerie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/estado_serie"
+                android:textSize="14sp"
+                android:layout_marginTop="4dp" />
 
-                <TextView
-                    android:id="@+id/tvisEstadoSerie"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="16dp"
-                    android:text="@string/estado_serie"
-                    android:textSize="14sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvisCategoriaSerie" />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <Button
-                android:id="@+id/isbVerInfo"
-                android:layout_width="30dp"
-                android:layout_height="48dp"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:backgroundTint="@color/rojo"
-                android:drawableTop="@drawable/ic_info"
-                android:drawablePadding="4dp"
-                android:text=""
-                android:textColor="@android:color/white" />
+            <TextView
+                android:id="@+id/tvPuntuacion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Puntuación: 8.5"
+                android:textStyle="italic"
+                android:textSize="13sp"
+                android:layout_marginTop="4dp" />
         </LinearLayout>
 
+        <!-- Botón info -->
+        <ImageButton
+            android:id="@+id/isbVerInfo"
+            android:layout_width="80dp"
+            android:layout_height="45dp"
+
+            android:backgroundTint="@color/rojo"
+            android:src="@drawable/ic_info"
+            android:contentDescription="@string/ver_info"
+            android:layout_marginStart="8dp"
+            app:tint="@android:color/white" />
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginBottom="12dp"
-        android:background="@color/rojo"
-    />
-
-</LinearLayout>
+</androidx.cardview.widget.CardView>

@@ -26,4 +26,13 @@ interface SerieDAO {
 
     @Delete
     suspend fun borrarSerie(miSerie: Serie)
+
+    //comprobar titulo serie existente
+    @Query("SELECT COUNT(*) FROM Series WHERE LOWER(titulo) = LOWER(:titulo)")
+    suspend fun existeSerieConTitulo(titulo: String): Int
+
+    @Query("SELECT COUNT(*) FROM Series WHERE LOWER(titulo) = LOWER(:titulo) AND id != :id")
+    suspend fun existeOtroConTitulo(titulo: String, id: Int): Int
+
+
 }

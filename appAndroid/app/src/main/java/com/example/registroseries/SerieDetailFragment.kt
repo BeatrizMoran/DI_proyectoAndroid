@@ -211,13 +211,25 @@ class SerieDetailFragment : Fragment() {
             val serie = validarDatos()
 
             if (serie != null) {
-                (activity as MainActivity).serieViewModel.actualizarSerie(serie)
-                accion = "ver"
-                actualizarModo()
-                mostrarMensajePersonalizado(
-                    requireContext(),
-                    "Serie actualizada", R.layout.custom_toast_info
-                )
+                (activity as MainActivity).serieViewModel.actualizarSerie(serie){ serieActualizada ->
+                    if (serieActualizada){
+                        mostrarMensajePersonalizado(
+                            requireContext(),
+                            "Serie actualizada", R.layout.custom_toast_info
+                        )
+                        accion = "ver"
+                        actualizarModo()
+
+                    }else{
+                        mostrarMensajePersonalizado(
+                            requireContext(),
+                            "Error.- Ya hay una serie con ese titulo", R.layout.custom_toast_layout
+                        )
+
+                    }
+                }
+
+
             }
         }
 

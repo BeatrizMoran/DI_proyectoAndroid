@@ -51,6 +51,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
+        //ocultar titulo toolbar
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        window.navigationBarColor = getColor(R.color.rojo)
+        //window.decorView.systemUiVisibility = 0
+
+
 
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(navController.graph)
@@ -85,10 +91,7 @@ class MainActivity : AppCompatActivity() {
 
         bottomNav.setOnItemSelectedListener { item ->
             when(item.itemId) {
-                R.id.action_settings -> {
-                    Toast.makeText(this, "Configuraciones", Toast.LENGTH_SHORT).show()
-                    true
-                }
+
                 R.id.action_crear_serie -> {
                     findNavController(R.id.nav_host_fragment_content_main)
                         .navigate(R.id.action_global_crearSerieFragment)
@@ -126,10 +129,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_settings -> {
-                Toast.makeText(this, "Configuraciones", Toast.LENGTH_LONG).show()
-                true
-            }
+
             R.id.action_logout -> {
                 loginVM.logout()
                 findNavController(R.id.nav_host_fragment_content_main)

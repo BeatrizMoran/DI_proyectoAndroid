@@ -1,10 +1,15 @@
 package com.example.registroseries
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -33,7 +38,7 @@ class DashboardFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
+        setHasOptionsMenu(true)
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         return binding.root
 
@@ -42,62 +47,67 @@ class DashboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val progressBar = binding.progressBarLoading
+
         val progressBar2 = binding.progressBarLoading2
 
-
-        progressBar.visibility = View.VISIBLE // Mostrar spinner al iniciar
         progressBar2.visibility = View.VISIBLE
 
-
-        viewPager = view.findViewById(R.id.viewPagerUltimasSeries)
+        val contenedorSeries = binding.contenedorSeries  // ID del LinearLayout en el XML
 
         (activity as MainActivity).serieViewModel.listaSeries.observe(viewLifecycleOwner) { lista ->
-            progressBar.visibility = View.GONE  // Ocultar spinner cuando hay datos
             progressBar2.visibility = View.GONE
 
+            val ultimas3Series = lista.sortedByDescending { it.fechaCreacion }.take(3)
 
-            val listaOrdenada = lista.sortedByDescending { it.fechaCreacion }
+            contenedorSeries.removeAllViews() // Limpiar por si acaso
 
-            adapter = CarruselSeriesAdaptador(listaOrdenada) { serieClicked ->
-                val bundle = Bundle().apply {
-                    putInt("id", serieClicked.id)
+            for (serie in ultimas3Series) {
+                val itemView = layoutInflater.inflate(R.layout.item_serie_simple, contenedorSeries, false)
+
+                val imagen = itemView.findViewById<ImageView>(R.id.imgSerie)
+                val titulo = itemView.findViewById<TextView>(R.id.tvTituloSerie)
+
+                titulo.text = serie.titulo
+                if (serie.imagenUrl != null) {
+                    val bitmap = BitmapFactory.decodeByteArray(serie.imagenUrl, 0, serie.imagenUrl!!.size)
+                    imagen.setImageBitmap(bitmap)
                 }
-                findNavController().navigate(R.id.action_dashboardFragment_to_serieDetailFragment, bundle)
+
+                itemView.setOnClickListener {
+                    val bundle = Bundle().apply {
+                        putInt("id", serie.id)
+                    }
+                    findNavController().navigate(R.id.action_dashboardFragment_to_serieDetailFragment, bundle)
+                }
+
+                contenedorSeries.addView(itemView)
             }
 
-            viewPager.adapter = adapter
-
-            val tabLayout = view.findViewById<TabLayout>(R.id.tabLayoutDots)
-            TabLayoutMediator(tabLayout, viewPager) { _, _ -> }.attach()
-
-
             inicializarDatosEstadisticas(lista)
-
         }
 
-        viewPager.setPadding(60, 0, 60, 0)
-        viewPager.clipToPadding = false
-        viewPager.clipChildren = false
-        viewPager.offscreenPageLimit = 3
-
-        val recyclerView = viewPager.getChildAt(0) as RecyclerView
-        recyclerView.clipToPadding = false
-
+        // Botón para ir a lista completa
         binding.dfbVerListaSeries.setOnClickListener {
             findNavController().navigate(R.id.action_dashboardFragment_to_seriesListFragment)
         }
 
+        // Botón para crear nueva serie
         binding.btnAddSerie.setOnClickListener {
             findNavController().navigate(R.id.action_dashboardFragment_to_serieCreateFragment)
             (activity as MainActivity).findViewById<BottomNavigationView>(R.id.bottom_navigation)
                 .selectedItemId = R.id.action_crear_serie
         }
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        // ocultar opciones del menu
+        menu.findItem(R.id.action_cargar_datos_formulario)?.isVisible = false
+        menu.findItem(R.id.action_limpiar_campos_formulario)?.isVisible = false
 
 
 
     }
-
 
     fun inicializarDatosEstadisticas(lista: List<Serie>){
         var numeroSeries = lista.size
@@ -113,6 +123,7 @@ class DashboardFragment : Fragment() {
         binding.tvSeriesVistas.text = "Series vistas: $seriesVistas"
         binding.tvSeriesAbandonadas.text = "series abandonadas: $seriesAbandonadas"
     }
+
 
 
     override fun onDestroyView() {

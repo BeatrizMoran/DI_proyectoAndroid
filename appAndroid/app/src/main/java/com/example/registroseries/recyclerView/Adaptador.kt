@@ -17,8 +17,9 @@ class Adaptador : ListAdapter<Serie, Adaptador.SerieVH>(ComparadorSeries()) {
     inner class SerieVH(val binding: ItemSerieBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(serie: Serie) {
             binding.tvisTituloSerie.text = serie.titulo
-            binding.tvisCategoriaSerie.text = serie.genero
+            binding.tvisCategoriaSerie.text = if (!serie.genero.isNullOrBlank()) serie.genero else "Sin especificar genero"
             binding.tvisEstadoSerie.text = serie.estadoVisualizacion
+            binding.tvPuntuacion.text = if(!serie.puntuacion.toString().isNullOrBlank()) serie.puntuacion.toString() else "Sin calificacion"
 
             if (serie.imagenUrl != null) {
                 val bitmap =
@@ -30,7 +31,7 @@ class Adaptador : ListAdapter<Serie, Adaptador.SerieVH>(ComparadorSeries()) {
                 val bundle = Bundle().apply {
                     putInt("id", serie.id)
                 }
-                binding.rviClPrincipal.findNavController()
+                binding.isbVerInfo.findNavController()
                     .navigate(R.id.action_seriesListFragment_to_serieDetailFragment, bundle)
             }
         }

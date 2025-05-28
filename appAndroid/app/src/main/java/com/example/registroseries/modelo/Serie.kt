@@ -4,10 +4,13 @@ import java.util.Date
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "Series")
-data class Serie(
+@Entity(
+    tableName = "Series",
+    indices = [Index(value = ["titulo"], unique = true)]
+)data class Serie(
     @PrimaryKey(autoGenerate = true) var id: Int = 0,
     var titulo: String,
     var genero: String,

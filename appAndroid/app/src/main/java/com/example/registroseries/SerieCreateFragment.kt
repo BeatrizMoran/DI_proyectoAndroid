@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
@@ -15,6 +16,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.registroseries.databinding.FragmentSerieCreateBinding
 import com.example.registroseries.databinding.FragmentSignUpBinding
@@ -45,6 +47,7 @@ class SerieCreateFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        setHasOptionsMenu(true)
 
         _binding = FragmentSerieCreateBinding.inflate(inflater, container, false)
         return binding.root
@@ -112,12 +115,21 @@ class SerieCreateFragment : Fragment() {
 
             if (serie != null) {
 
-                (activity as MainActivity).serieViewModel.insertarSerie(serie)
-                mostrarMensajePersonalizado(
-                    requireContext(),
-                    "Serie creada", R.layout.custom_toast_info
-                )
-                findNavController().navigate(R.id.action_serieCreateFragment_to_seriesListFragment)
+                (activity as MainActivity).serieViewModel.insertarSerie(serie){ serieInsertada ->
+                    if (serieInsertada){
+                        mostrarMensajePersonalizado(
+                            requireContext(),
+                            "Serie creada", R.layout.custom_toast_info
+                        )
+                        findNavController().navigate(R.id.action_serieCreateFragment_to_seriesListFragment)
+                    } else{
+                        mostrarMensajePersonalizado(
+                            requireContext(),
+                            "Error.- Ya has guardado una serie con ese titulo", R.layout.custom_toast_layout
+                        )
+                    }
+                }
+
 
             }
 
@@ -221,8 +233,81 @@ class SerieCreateFragment : Fragment() {
 
 
     }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
 
-        override fun onDestroyView() {
+            R.id.action_cargar_datos_formulario -> {
+                cargarDatosPruebaFormulario()
+                true
+            }
+            R.id.action_limpiar_campos_formulario -> {
+                limpiarCamposFormulario()
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    fun cargarDatosPruebaFormulario() {
+        binding.inputTitulo.setText("The Walking Dead")
+        binding.scfetnPuntuacion.setText("10")
+        binding.inputGenero.setText("Terror")
+        binding.scfcbProgresoSerie.isChecked = true
+        binding.inputTemporadaActual.setText("7")
+        binding.inputCapituloActual.setText("1")
+        binding.etNotas.setText("Llegará el día en que no estarás...")
+
+        // Asignar imagen desde drawable
+        binding.ivImagen.setImageResource(R.drawable.twd)
+
+        // Convertir drawable a ByteArray y guardarlo
+        val drawable = requireContext().resources.getDrawable(R.drawable.twd, null)
+        val bitmap = (drawable as android.graphics.drawable.BitmapDrawable).bitmap
+        val stream = java.io.ByteArrayOutputStream()
+        bitmap.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, stream)
+        imagenSeleccionadaBytes = stream.toByteArray()
+    }
+
+    fun limpiarCamposFormulario() {
+        // Limpiar campos de texto
+        binding.inputTitulo.setText("")
+        binding.scfetnPuntuacion.setText("")
+        binding.inputGenero.setText("")
+        binding.inputTemporadaActual.setText("")
+        binding.inputCapituloActual.setText("")
+        binding.etNotas.setText("")
+        binding.etFechaEmision.setText("")
+
+        // Desmarcar switches y checkboxes
+        binding.scfcbProgresoSerie.isChecked = false
+        binding.scfcbFechaEmision.isChecked = false
+        binding.switchFinalizada.isChecked = false
+
+        // Ocultar layouts que dependen de switches
+        binding.scfllProgresoTemporadaCapitulo.visibility = View.GONE
+        binding.scfcbFechaEmision.visibility = View.GONE
+
+        // Reiniciar el spinner al primer ítem (por defecto)
+        binding.spinnerEstadoUsuario.setSelection(0)
+
+        // Limpiar imagen
+        binding.ivImagen.setImageDrawable(null)
+        imagenSeleccionadaBytes = null
+
+        // Resetear fecha
+        fechaProximoEstreno = null
+
+        // Opcional: limpiar fondo de errores
+        binding.inputTitulo.setBackgroundColor(Color.TRANSPARENT)
+        binding.scfetnPuntuacion.setBackgroundColor(Color.TRANSPARENT)
+        binding.inputGenero.setBackgroundColor(Color.TRANSPARENT)
+    }
+
+
+
+
+    override fun onDestroyView() {
             super.onDestroyView()
             _binding = null
         }

@@ -3,21 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Título y puntuacion -->
-
         <TextView
             android:id="@+id/scftvTitulo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Registrar nueva serie"
-            android:textSize="25dp"
+            android:textSize="25sp"
             android:layout_marginVertical="12dp"
             />
 

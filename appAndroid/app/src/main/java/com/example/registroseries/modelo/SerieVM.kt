@@ -12,12 +12,15 @@ class SerieVM(private val miRepositorio: Repositorio): ViewModel(){
     val listaSeries: LiveData<List<Serie>> = miRepositorio.mostrarSeries().asLiveData()
 
 
-    fun insertarSerie(miSerie: Serie)=viewModelScope.launch {
-        miRepositorio.insertarSerie(miSerie)
+    fun insertarSerie(miSerie: Serie, onResultado: (Boolean) -> Unit) = viewModelScope.launch {
+        val resultado = miRepositorio.insertarSerie(miSerie)
+        onResultado(resultado)
     }
 
-    fun actualizarSerie(miSerie: Serie)=viewModelScope.launch {
-        miRepositorio.actualizarSeri(miSerie)
+
+    fun actualizarSerie(miSerie: Serie, onResultado: (Boolean) -> Unit)=viewModelScope.launch {
+        val resultado = miRepositorio.actualizarSerie(miSerie)
+        onResultado(resultado)
     }
 
     fun borrarSerie(miSerie: Serie)=viewModelScope.launch {

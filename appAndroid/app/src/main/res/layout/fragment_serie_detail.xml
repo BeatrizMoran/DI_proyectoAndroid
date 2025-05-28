@@ -1,261 +1,253 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/serieDetailLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    tools:context=".SerieDetailFragment">
+    android:fillViewport="true"
+    android:layout_height="match_parent">
 
-    <!-- Botones superiores -->
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_marginBottom="16dp">
-
-        <!-- Botón Volver alineado a la izquierda -->
-        <Button
-            android:id="@+id/sdfbVolver"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:drawableLeft="@drawable/ic_volver"
-            android:padding="9dp"
-            android:text=" "
-            app:backgroundTint="@color/grisClaro"
-             />
-
-        <!-- Espaciador flexible -->
-        <View
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/sdfbEditar"
-            android:layout_width="55dp"
-            android:layout_height="48dp"
-            android:drawableTop="@drawable/ic_edit"
-            android:text=""
-            android:gravity="center"
-            android:padding="8dp"
-            android:layout_marginEnd="30dp"
-            app:backgroundTint="@color/rojo" />
-        <Button
-            android:id="@+id/sdfbCancelarEdicion"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:text="Cancelar Edicion"
-            android:gravity="center"
-            android:padding="8dp"
-            android:layout_marginEnd="30dp"
-            app:backgroundTint="@color/rojo"
-            android:visibility="gone"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/sdfbBorrar"
-            android:layout_width="55dp"
-            android:layout_height="48dp"
-            android:text=""
-            android:padding="15dp"
-            android:backgroundTint="@color/rojo"
-            app:icon="@drawable/ic_basura"
-            app:iconTint="@android:color/black"
-            app:iconSize="26dp"
-
-            android:gravity="center"
-            />
-
-
-
-    </LinearLayout>
-
-    <!-- Imagen y título -->
-    <LinearLayout
+        android:id="@+id/serieDetailLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:padding="16dp"
+        tools:context=".SerieDetailFragment">
+
+        <!-- Botones superiores -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
+
+            <!-- Botón Volver alineado a la izquierda -->
+            <Button
+                android:id="@+id/sdfbVolver"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:drawableLeft="@drawable/ic_volver"
+                android:padding="9dp"
+                android:text=" "
+                app:backgroundTint="@color/grisClaro" />
+
+            <!-- Espaciador flexible -->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/sdfbEditar"
+                android:layout_width="55dp"
+                android:layout_height="48dp"
+                android:drawableTop="@drawable/ic_edit"
+                android:text=""
+                android:gravity="center"
+                android:padding="8dp"
+                android:layout_marginEnd="30dp"
+                app:backgroundTint="@color/rojo" />
+
+            <Button
+                android:id="@+id/sdfbCancelarEdicion"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:text="Cancelar Edicion"
+                android:gravity="center"
+                android:padding="8dp"
+                android:layout_marginEnd="30dp"
+                app:backgroundTint="@color/rojo"
+                android:visibility="gone" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/sdfbBorrar"
+                android:layout_width="55dp"
+                android:layout_height="48dp"
+                android:text=""
+                android:padding="15dp"
+                android:backgroundTint="@color/rojo"
+                app:icon="@drawable/ic_basura"
+                app:iconTint="@android:color/black"
+                app:iconSize="26dp"
+                android:gravity="center" />
+        </LinearLayout>
+
+        <!-- Imagen y título -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/sdfivImagenSerie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/serie_default_image" />
+
+                <Button
+                    android:id="@+id/sdfbCambiarImagen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Cambiar imagen"
+                    android:visibility="gone"
+                    android:textColor="?attr/colorPrimary"
+                    android:backgroundTint="@color/grisClaro" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:hint="* Título">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/sdfinputTitulo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:hint="Puntuacion">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/sdfetnPuntuacion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+        </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/sdfivImagenSerie"
-                android:layout_width="wrap_content"
-                android:layout_height="120dp"
-                android:layout_weight="1"
-                android:scaleType="centerCrop"
-                android:src="@drawable/serie_default_image" />
-
-            <Button
-                android:id="@+id/sdfbCambiarImagen"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Cambiar imagen"
-                android:visibility="gone"
-                android:textColor="?attr/colorPrimary"
-
-                android:backgroundTint="@color/grisClaro"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"> <!-- Añadido -->
-
+            <!-- Género -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:hint="* Título">
+                android:hint="Género"
+                android:layout_marginVertical="12dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/sdfinputTitulo"
+                    android:id="@+id/sdftilGenero"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
+                    android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Estado visualizacion -->
+            <Spinner
+                android:id="@+id/sdfspinnerEstadoVisualizacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:entries="@array/estados_visualizacionSerie_array" />
+
+            <CheckBox
+                android:id="@+id/sdfcbProgresoSerie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Guardar progreso de la serie (Temporada/Capítulo)" />
+
+            <LinearLayout
+                android:id="@+id/sdfllprogresoTemporadaCapitulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                android:visibility="gone">
+
+                <!-- Temporada actual (50%) -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:hint="Temporada Actual"
+                    android:layout_marginBottom="12dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/inputTemporadaActual"
+                        android:inputType="number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Capítulo actual (50%) -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="0.5"
+                    android:hint="Capitulo actual">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/inputCapituloActual"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:layout_height="wrap_content" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <!-- Switch: ¿serie finalizada? -->
+            <Switch
+                android:id="@+id/sdfswitchFinalizada"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Serie en emision"
+                android:layout_marginTop="12dp"
+                app:thumbTint="@color/rojo"
+                app:trackTint="@color/rojo" />
 
             <EditText
-                android:id="@+id/sdfetnPuntuacion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                android:hint="Puntuación" />
-        </LinearLayout>
-
-
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <!-- Género -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Género"
-            android:layout_marginVertical="12dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/sdftilGenero"
+                android:id="@+id/etFechaEmision"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <!-- Estado visualizacion -->
-        <Spinner
-            android:id="@+id/sdfspinnerEstadoVisualizacion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:entries="@array/estados_visualizacionSerie_array"/>
-        <CheckBox
-            android:id="@+id/sdfcbProgresoSerie"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Guardar progreso de la serie (Temporada/Capítulo) " />
-        <LinearLayout
-            android:id="@+id/sdfllprogresoTemporadaCapitulo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="1"
-            android:visibility="gone"
-            >
-
-            <!-- Título (80% del espacio) -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:hint="Temporada Actual"
-                android:layout_marginBottom="12dp"
-                >
+                android:hint="Fecha de emisión"
+                android:inputType="date" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputTemporadaActual"
-                    android:inputType="number"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Estado (20% del espacio) -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="0dp"
+            <EditText
+                android:id="@+id/sdfetNotas"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_weight="0.5"
-                android:hint="Capitulo actual">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputCapituloActual"
-                    android:layout_width="match_parent"
-                    android:inputType="number"
-                    android:layout_height="wrap_content"/>
+                android:hint="Escribe tus notas aquí"
+                android:inputType="textMultiLine"
+                android:lines="4"
+                android:gravity="top|start"
+                android:padding="8dp" />
 
-
-
-            </com.google.android.material.textfield.TextInputLayout>
+            <Button
+                android:id="@+id/sdfbActualizar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Actualizar"
+                android:backgroundTint="@color/rojo"
+                android:visibility="gone"
+                android:layout_marginVertical="12dp" />
         </LinearLayout>
-
-
-
-
-
-        <!-- Switch: ¿serie finalizada? -->
-        <Switch
-            android:id="@+id/sdfswitchFinalizada"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Serie en emision"
-            android:layout_marginTop="12dp"
-            app:thumbTint="@color/rojo"
-            app:trackTint="@color/rojo"/>
-        <EditText
-            android:id="@+id/etFechaEmision"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Fecha de emisión"
-            android:inputType="date"
-            />
-        <!--android:visibility=""-->
-
-        <EditText
-            android:id="@+id/sdfetNotas"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Escribe tus notas aquí"
-            android:inputType="textMultiLine"
-            android:lines="4"
-            android:gravity="top|start"
-            android:padding="8dp"
-            />
-
-        <Button
-            android:id="@+id/sdfbActualizar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Actualizar"
-            android:backgroundTint="@color/rojo"
-            android:visibility="gone"
-            android:layout_marginVertical="12dp"/>
     </LinearLayout>
-
-
-</LinearLayout>
+</ScrollView>

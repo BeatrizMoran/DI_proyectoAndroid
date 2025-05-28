@@ -43,7 +43,7 @@ class SignUpFragment : Fragment() {
         binding.sufbSignUp.setOnClickListener {
             AlertDialog.Builder(requireContext())
                 .setTitle("Confirmación")
-                .setMessage("Al crear unanueva cuenta, se borraran todos los datos de la cuenta anterior si tiene")
+                .setMessage("Al crear una nueva cuenta, se eliminarán todos los datos asociados a la cuenta anterior (si existe). ¿Deseas continuar?")
                 .setPositiveButton("Aceptar") { dialog, _ -> dialog.dismiss()
                     val usuario = validarDatos()
 

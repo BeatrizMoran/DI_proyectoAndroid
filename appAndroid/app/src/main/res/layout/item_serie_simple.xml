@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="4dp"
+    android:gravity="top|center_horizontal"
+    android:layout_marginHorizontal="5dp">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+        <ImageView
+            android:id="@+id/imgSerie"
+            android:layout_width="80dp"
+            android:layout_height="100dp"
+            android:layout_gravity="top|center_horizontal"
+            android:scaleType="centerCrop"
+            android:src="@drawable/serie_default_image" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tvTituloSerie"
+        android:layout_width="80dp"
+        android:layout_height="60dp"
+        android:textAlignment="center"
+        android:text="Título de la serie muy largo que podría ocupar varias líneas"
+        android:gravity="center_horizontal"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textSize="14sp"
+        android:layout_marginTop="4dp" />
+
+</LinearLayout>
