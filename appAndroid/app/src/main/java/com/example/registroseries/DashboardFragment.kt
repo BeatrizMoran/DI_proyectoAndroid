@@ -89,12 +89,15 @@ class DashboardFragment : Fragment() {
         // Botón para ir a lista completa
         binding.dfbVerListaSeries.setOnClickListener {
             findNavController().navigate(R.id.action_dashboardFragment_to_seriesListFragment)
+            (requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigation))
+                .selectedItemId = R.id.action_lista_series
         }
+
 
         // Botón para crear nueva serie
         binding.btnAddSerie.setOnClickListener {
             findNavController().navigate(R.id.action_dashboardFragment_to_serieCreateFragment)
-            (activity as MainActivity).findViewById<BottomNavigationView>(R.id.bottom_navigation)
+            (activity as MainActivity).findViewById<BottomNavigationView>(R.id.bottomNavigation)
                 .selectedItemId = R.id.action_crear_serie
         }
     }
@@ -104,9 +107,7 @@ class DashboardFragment : Fragment() {
         // ocultar opciones del menu
         menu.findItem(R.id.action_cargar_datos_formulario)?.isVisible = false
         menu.findItem(R.id.action_limpiar_campos_formulario)?.isVisible = false
-
-
-
+        menu.findItem(R.id.action_cambiar_vista)?.isVisible = false
     }
 
     fun inicializarDatosEstadisticas(lista: List<Serie>){

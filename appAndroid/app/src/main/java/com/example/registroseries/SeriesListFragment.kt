@@ -5,11 +5,14 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.registroseries.databinding.FragmentFirstBinding
 import com.example.registroseries.databinding.FragmentSeriesListBinding
 import com.example.registroseries.modelo.SerieVM
@@ -24,6 +27,12 @@ class SeriesListFragment : Fragment() {
     private val binding get() = _binding!!
     private var estadoVisualizacionFiltro: String = "Todas"
     private var ordenSeries: String = "reciente"
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var linearLayoutManager: LinearLayoutManager
+    private lateinit var gridLayoutManager: GridLayoutManager
+
+    var isGridView = false // inicialmente lista vertical
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,7 +48,12 @@ class SeriesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        recyclerView = binding.tfrvSeries
 
+        linearLayoutManager = LinearLayoutManager(requireContext())
+        gridLayoutManager = GridLayoutManager(requireContext(), 2)
+
+        recyclerView.layoutManager = linearLayoutManager
         mostrarSeries()
 
         //Filtro series por estado visualizacion
@@ -71,9 +85,9 @@ class SeriesListFragment : Fragment() {
     }
 
     fun mostrarSeries(){
-        val adaptador = Adaptador()
-        binding.tfrvSeries.layoutManager = LinearLayoutManager(requireContext())
-        binding.tfrvSeries.adapter = adaptador
+        val adaptador = Adaptador(isGridView)
+        recyclerView.layoutManager = if (isGridView) gridLayoutManager else linearLayoutManager
+        recyclerView.adapter = adaptador
 
         (activity as MainActivity).serieViewModel.listaSeries.observe(viewLifecycleOwner) { lista ->
 
@@ -107,6 +121,27 @@ class SeriesListFragment : Fragment() {
         menu.findItem(R.id.action_limpiar_campos_formulario)?.isVisible = false
 
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+
+            R.id.action_cambiar_vista -> {
+                toggleLayout()
+                true
+            }
+
+
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    fun toggleLayout() {
+        isGridView = !isGridView
+        recyclerView.layoutManager = if (isGridView) gridLayoutManager else linearLayoutManager
+        mostrarSeries()
+    }
+
+
 
 
     override fun onDestroyView() {

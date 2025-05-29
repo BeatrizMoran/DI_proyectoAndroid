@@ -3,14 +3,17 @@ package com.example.registroseries
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.isNotEmpty
 import androidx.navigation.fragment.findNavController
 import com.example.registroseries.databinding.FragmentFirstBinding
 import com.example.registroseries.databinding.FragmentLoginBinding
 import com.example.registroseries.utils.mostrarMensajePersonalizado
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class LoginFragment : Fragment() {
@@ -24,6 +27,7 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        setHasOptionsMenu(true)
 
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
@@ -34,6 +38,9 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+
 
         binding.lfbLogin.setOnClickListener {
             comprobarIniciarSesion()
@@ -73,18 +80,18 @@ class LoginFragment : Fragment() {
         }
 
 
-        /*(activity as MainActivity).loginVM.loginExitoso.observe(viewLifecycleOwner) { correcto ->
-            if (correcto) {
-                // El login fue exitoso, navega o muestra un mensaje
-                findNavController().navigate(R.id.action_loginFragment_to_seriesListFragment)
-            } else {
-                // Login fallido, muestra error
-                mostrarMensajePersonalizado("Usuario o contraseña incorrectos", R.layout.custom_toast_layout)
-            }
-        }*/
+
 
 
     }
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        // ocultar opciones del menu
+        menu.findItem(R.id.action_cargar_datos_formulario)?.isVisible = false
+        menu.findItem(R.id.action_limpiar_campos_formulario)?.isVisible = false
+        menu.findItem(R.id.action_logout)?.isVisible = false
+    }
+
 
 
 }

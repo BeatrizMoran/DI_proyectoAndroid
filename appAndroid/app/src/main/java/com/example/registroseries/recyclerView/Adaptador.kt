@@ -10,35 +10,64 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.navigation.findNavController
 import com.example.registroseries.R
 import com.example.registroseries.databinding.ItemSerieBinding
+import com.example.registroseries.databinding.ItemSerieGridBinding
 import com.example.registroseries.modelo.Serie
 
-class Adaptador : ListAdapter<Serie, Adaptador.SerieVH>(ComparadorSeries()) {
+class Adaptador(private val isGridView: Boolean = false) :
+    ListAdapter<Serie, Adaptador.SerieVH>(ComparadorSeries()) {
 
-    inner class SerieVH(val binding: ItemSerieBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class SerieVH(private val binding: Any) : RecyclerView.ViewHolder(
+        when(binding) {
+            is ItemSerieBinding -> binding.root
+            is ItemSerieGridBinding -> binding.root
+            else -> throw IllegalArgumentException("Binding no soportado")
+        }
+    ) {
         fun bind(serie: Serie) {
-            binding.tvisTituloSerie.text = serie.titulo
-            binding.tvisCategoriaSerie.text = if (!serie.genero.isNullOrBlank()) serie.genero else "Sin especificar genero"
-            binding.tvisEstadoSerie.text = serie.estadoVisualizacion
-            binding.tvPuntuacion.text = if(!serie.puntuacion.toString().isNullOrBlank()) serie.puntuacion.toString() else "Sin calificacion"
+            when (binding) {
+                is ItemSerieBinding -> {
+                    binding.tvisTituloSerie.text = serie.titulo
+                    binding.tvisCategoriaSerie.text = if (!serie.genero.isNullOrBlank()) serie.genero else "Sin especificar género"
+                    binding.tvisEstadoSerie.text = serie.estadoVisualizacion
+                    binding.tvPuntuacion.text = if (serie.puntuacion != null) serie.puntuacion.toString() else "Sin calificación"
 
-            if (serie.imagenUrl != null) {
-                val bitmap =
-                    BitmapFactory.decodeByteArray(serie.imagenUrl, 0, serie.imagenUrl!!.size)
-                binding.imageView.setImageBitmap(bitmap)
-            }
+                    serie.imagenUrl?.let {
+                        val bitmap = BitmapFactory.decodeByteArray(it, 0, it.size)
+                        binding.imageView.setImageBitmap(bitmap)
+                    }
 
-            binding.isbVerInfo.setOnClickListener {
-                val bundle = Bundle().apply {
-                    putInt("id", serie.id)
+                    binding.isbVerInfo.setOnClickListener {
+                        val bundle = Bundle().apply { putInt("id", serie.id) }
+                        it.findNavController().navigate(R.id.action_seriesListFragment_to_serieDetailFragment, bundle)
+                    }
                 }
-                binding.isbVerInfo.findNavController()
-                    .navigate(R.id.action_seriesListFragment_to_serieDetailFragment, bundle)
+                is ItemSerieGridBinding -> {
+                    binding.tvisTituloSerie.text = serie.titulo
+                    binding.tvisCategoriaSerie.text = if (!serie.genero.isNullOrBlank()) serie.genero else "Sin especificar género"
+                    binding.tvisEstadoSerie.text = serie.estadoVisualizacion
+                    binding.tvPuntuacion.text = if (serie.puntuacion != null) serie.puntuacion.toString() else "Sin calificación"
+
+                    serie.imagenUrl?.let {
+                        val bitmap = BitmapFactory.decodeByteArray(it, 0, it.size)
+                        binding.imageView.setImageBitmap(bitmap)
+                    }
+
+                    binding.isbVerInfo.setOnClickListener {
+                        val bundle = Bundle().apply { putInt("id", serie.id) }
+                        it.findNavController().navigate(R.id.action_seriesListFragment_to_serieDetailFragment, bundle)
+                    }
+                }
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SerieVH {
-        val binding = ItemSerieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = if (isGridView) {
+            ItemSerieGridBinding.inflate(inflater, parent, false)
+        } else {
+            ItemSerieBinding.inflate(inflater, parent, false)
+        }
         return SerieVH(binding)
     }
 
@@ -47,13 +76,12 @@ class Adaptador : ListAdapter<Serie, Adaptador.SerieVH>(ComparadorSeries()) {
     }
 }
 
-// Clase para comparar elementos de la lista y optimizar cambios
 class ComparadorSeries : DiffUtil.ItemCallback<Serie>() {
-    override fun areItemsTheSame(antigua: Serie, nueva: Serie): Boolean {
-        return antigua.titulo == nueva.titulo
+    override fun areItemsTheSame(oldItem: Serie, newItem: Serie): Boolean {
+        return oldItem.id == newItem.id // mejor comparar por id único
     }
 
-    override fun areContentsTheSame(antigua: Serie, nueva: Serie): Boolean {
-        return antigua == nueva
+    override fun areContentsTheSame(oldItem: Serie, newItem: Serie): Boolean {
+        return oldItem == newItem
     }
 }

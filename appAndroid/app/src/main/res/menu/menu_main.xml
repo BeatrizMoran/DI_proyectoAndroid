@@ -9,6 +9,9 @@
         android:id="@+id/action_cargar_datos_formulario"
         android:title="Cargar datos prueba" />
     <item
+        android:id="@+id/action_cambiar_vista"
+        android:title="Cambiar vista" />
+    <item
         android:id="@+id/action_logout"
         android:title="@string/cerrar_sesion" />
 </menu>

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.TypedValue
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -28,7 +29,7 @@ class SignUpFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
+        setHasOptionsMenu(true)
         _binding = FragmentSignUpBinding.inflate(inflater, container, false)
         return binding.root
 
@@ -120,10 +121,14 @@ class SignUpFragment : Fragment() {
         )
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        // ocultar opciones del menu
+        menu.findItem(R.id.action_cargar_datos_formulario)?.isVisible = false
+        menu.findItem(R.id.action_limpiar_campos_formulario)?.isVisible = false
+        menu.findItem(R.id.action_logout)?.isVisible = false
 
-
-
-
+    }
 
 
     override fun onDestroyView() {

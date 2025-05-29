@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
@@ -249,6 +250,8 @@ class SerieCreateFragment : Fragment() {
         }
     }
 
+
+
     fun cargarDatosPruebaFormulario() {
         binding.inputTitulo.setText("The Walking Dead")
         binding.scfetnPuntuacion.setText("10")
@@ -305,7 +308,11 @@ class SerieCreateFragment : Fragment() {
     }
 
 
-
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        // ocultar opciones del menu
+        menu.findItem(R.id.action_cambiar_vista)?.isVisible = false
+    }
 
     override fun onDestroyView() {
             super.onDestroyView()
