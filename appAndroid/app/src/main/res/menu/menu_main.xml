@@ -10,7 +10,7 @@
         android:title="Cargar datos prueba" />
     <item
         android:id="@+id/action_cambiar_vista"
-        android:title="Cambiar vista" />
+        android:title="Cambiar vista (rejilla)" />
     <item
         android:id="@+id/action_logout"
         android:title="@string/cerrar_sesion" />

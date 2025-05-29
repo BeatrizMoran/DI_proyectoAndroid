@@ -30,6 +30,8 @@ class SeriesListFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var gridLayoutManager: GridLayoutManager
+    private var menuOpciones: Menu? = null
+
 
     var isGridView = false // inicialmente lista vertical
 
@@ -116,6 +118,8 @@ class SeriesListFragment : Fragment() {
     }
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
+        menuOpciones = menu
+
         // ocultar opciones del menu
         menu.findItem(R.id.action_cargar_datos_formulario)?.isVisible = false
         menu.findItem(R.id.action_limpiar_campos_formulario)?.isVisible = false
@@ -138,6 +142,9 @@ class SeriesListFragment : Fragment() {
     fun toggleLayout() {
         isGridView = !isGridView
         recyclerView.layoutManager = if (isGridView) gridLayoutManager else linearLayoutManager
+        val item = menuOpciones?.findItem(R.id.action_cambiar_vista)
+        item?.title = if (isGridView) "Ver como lista" else "Ver como rejilla"
+
         mostrarSeries()
     }
 
