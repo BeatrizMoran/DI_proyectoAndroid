@@ -1,6 +1,7 @@
 package com.example.registroseries
 
 import android.os.Bundle
+import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
@@ -60,11 +61,20 @@ class LoginFragment : Fragment() {
     fun comprobarIniciarSesion() {
         val email = binding.lftvEmail.text.toString()
         val password = binding.lftvPassword.text.toString()
+        val esEmailValido = Patterns.EMAIL_ADDRESS.matcher(email).matches()
+
 
         if (email.isBlank() || password.isBlank()) {
             mostrarMensajePersonalizado(
                 requireContext(),
                 "Debes completar ambos campos", R.layout.custom_toast_layout
+            )
+            return
+        }else if (!esEmailValido) {
+            mostrarMensajePersonalizado(
+                requireContext(),
+                "El email no tiene un formato válido",
+                R.layout.custom_toast_layout
             )
             return
         }

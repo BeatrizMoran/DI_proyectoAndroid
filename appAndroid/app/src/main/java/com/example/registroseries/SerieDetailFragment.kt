@@ -17,8 +17,10 @@ import androidx.navigation.fragment.findNavController
 import com.example.registroseries.databinding.FragmentSerieDetailBinding
 import com.example.registroseries.modelo.Serie
 import com.example.registroseries.modelo.SerieVM
+import com.example.registroseries.utils.formatearFecha
 import com.example.registroseries.utils.mostrarCalendarioConFecha
 import com.example.registroseries.utils.mostrarMensajePersonalizado
+import com.example.registroseries.utils.parsearFecha
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -102,48 +104,50 @@ class SerieDetailFragment : Fragment() {
 
     private fun inicializarDatos(usandoImagenSeleccionada: Boolean = true) {
         val spinner = binding.sdfspinnerEstadoVisualizacion
+        val cbFechaEmision = binding.scfcbFechaEmision
 
         serieFiltrada?.let { serie ->
             binding.sdfinputTitulo.setText(serie.titulo)
             binding.sdfetnPuntuacion.setText(serie.puntuacion?.toString() ?: "")
             binding.sdftilGenero.setText(serie.genero)
-            binding.inputTemporadaActual.setText( if (serie.temporadaActual != null) serie.temporadaActual.toString() else (""))
-            binding.inputCapituloActual.setText(if(serie.captituloActual != null) serie.captituloActual.toString() else(""))
+            binding.inputTemporadaActual.setText(serie.temporadaActual?.toString() ?: "")
+            binding.inputCapituloActual.setText(serie.captituloActual?.toString() ?: "")
 
+            binding.sdfcbProgresoSerie.isChecked = serie.temporadaActual != null
 
-            if (serie.temporadaActual != null){
-                binding.sdfcbProgresoSerie.isChecked = true
-            }
             // Spinner
             val adapter = spinner.adapter
             val estadoActual = serie.estadoVisualizacion
-            var posicion = 0
             for (i in 0 until adapter.count) {
                 if (adapter.getItem(i) == estadoActual) {
-                    posicion = i
+                    spinner.setSelection(i)
                     break
                 }
             }
-            spinner.setSelection(posicion)
 
             // Switch
             binding.sdfswitchFinalizada.isChecked = serie.serieEnEmision ?: false
+            serieEnEmision = serie.serieEnEmision ?: false
+            fechaProximoEstreno = serie.fechaProximoEstreno
 
-            // Fecha
-            if (serie.fechaProximoEstreno == null) {
-                binding.etFechaEmision.hint = "Sin próxima fecha de emisión"
-            } else {
+            // CheckBox de fecha de emisión
+            cbFechaEmision.visibility = if (serieEnEmision) View.VISIBLE else View.GONE
+            cbFechaEmision.isChecked = serie.fechaProximoEstreno != null
+
+            // Campo de fecha de emisión
+            if (serie.fechaProximoEstreno != null) {
                 binding.etFechaEmision.setText(formatoFecha(serie.fechaProximoEstreno!!))
+            } else {
+                binding.etFechaEmision.setText("")
+                binding.etFechaEmision.hint = "Sin próxima fecha de emisión"
             }
-
-
+            binding.etFechaEmision.visibility = if (serieEnEmision && cbFechaEmision.isChecked) View.VISIBLE else View.GONE
 
             // Notas
             binding.sdfetNotas.setText(serie.notas ?: "")
             binding.sdfetNotas.hint = if (serie.notas.isNullOrBlank()) "No hay notas para esta serie" else ""
 
             // Imagen
-            // Mostrar imagen
             if (usandoImagenSeleccionada && imagenSeleccionadaBytes != null) {
                 val bitmap = BitmapFactory.decodeByteArray(imagenSeleccionadaBytes, 0, imagenSeleccionadaBytes!!.size)
                 binding.sdfivImagenSerie.setImageBitmap(bitmap)
@@ -155,22 +159,26 @@ class SerieDetailFragment : Fragment() {
                 binding.sdfivImagenSerie.setImageResource(R.drawable.serie_default_image)
             }
 
-
             // Botón cambiar imagen
             binding.sdfbCambiarImagen.setOnClickListener {
                 imagePickerLauncher.launch("image/*")
             }
         }
+
+        val esViendo = spinner.selectedItem.toString() == "Viendo"
+        binding.sdfcbProgresoSerie.visibility = if (esViendo) View.VISIBLE else View.GONE
+        binding.sdfllprogresoTemporadaCapitulo.visibility = if (esViendo && binding.sdfcbProgresoSerie.isChecked) View.VISIBLE else View.GONE
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val cbProgresoSerie = binding.sdfcbProgresoSerie
+        val cbFechaEmision = binding.scfcbFechaEmision // El checkbox que controla si hay una nueva fecha
+        val etFechaEmision = binding.etFechaEmision
 
-        binding.sdfcbProgresoSerie.visibility = if (estadoVisualizacion == "Viendo") View.VISIBLE else View.GONE
 
-        binding.etFechaEmision.visibility = if (serieEnEmision) View.VISIBLE else View.GONE
 
 
 
@@ -185,10 +193,12 @@ class SerieDetailFragment : Fragment() {
         id = arguments?.getInt("id")
         viewModel = (activity as MainActivity).serieViewModel
 
+        //observar, para que al actualizar datos se reflejen
         viewModel.listaSeries.observe(viewLifecycleOwner) { lista ->
             serieFiltrada = lista.find { it.id == id }
             inicializarDatos()
         }
+
 
         binding.etFechaEmision.setOnClickListener {
             mostrarCalendarioConFecha(requireContext(), binding.etFechaEmision) { fecha ->
@@ -255,13 +265,25 @@ class SerieDetailFragment : Fragment() {
 
         binding.sdfswitchFinalizada.setOnCheckedChangeListener { _, isChecked ->
             serieEnEmision = isChecked
-            binding.etFechaEmision.visibility = if (serieEnEmision) View.VISIBLE else View.GONE
+            cbFechaEmision.visibility = if (serieEnEmision) View.VISIBLE else View.GONE
 
+            // Si se apaga el switch de emisión, también ocultamos el campo fecha
+            if (!isChecked) {
+                etFechaEmision.visibility = View.GONE
+                cbFechaEmision.isChecked = false
+            }
+        }
+        // CheckBox: ¿Hay nueva fecha de emisión?
+        cbFechaEmision.setOnCheckedChangeListener { _, isChecked ->
+            etFechaEmision.visibility = if (isChecked) View.VISIBLE else View.GONE
         }
 
         cbProgresoSerie.setOnCheckedChangeListener { _, isChecked ->
-            binding.sdfllprogresoTemporadaCapitulo.visibility = if (isChecked) View.VISIBLE else View.GONE
+            if (binding.sdfspinnerEstadoVisualizacion.selectedItem.toString() == "Viendo") {
+                binding.sdfllprogresoTemporadaCapitulo.visibility = if (isChecked) View.VISIBLE else View.GONE
+            }
         }
+
 
         binding.sdfspinnerEstadoVisualizacion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
@@ -337,18 +359,20 @@ class SerieDetailFragment : Fragment() {
             return null
         }
 
+
+
         // Crear y retornar la serie si todo está bien
         return serieFiltrada?.let { it1 ->
             Serie(
                 id = it1.id,  // Asegúrate de incluir esto si tu modelo Serie lo requiere
                 titulo = binding.sdfinputTitulo.text.toString(),
                 genero = binding.sdftilGenero.text.toString(),
-                temporadaActual = binding.inputTemporadaActual.text.toString().toIntOrNull(),
-                captituloActual = binding.inputCapituloActual.text.toString().toIntOrNull(),
+                temporadaActual = if (binding.sdfcbProgresoSerie.isChecked) binding.inputTemporadaActual.text.toString().toIntOrNull() else null,
+                captituloActual = if(binding.sdfcbProgresoSerie.isChecked) binding.inputCapituloActual.text.toString().toIntOrNull() else null,
                 puntuacion = binding.sdfetnPuntuacion.text.toString().toDoubleOrNull(),
-                fechaProximoEstreno = fechaProximoEstreno,
+                fechaProximoEstreno = if(binding.scfcbFechaEmision.isChecked) fechaProximoEstreno else null,
                 estadoVisualizacion = binding.sdfspinnerEstadoVisualizacion.selectedItem.toString(),
-                serieEnEmision = binding.sdfswitchFinalizada.isChecked,
+                serieEnEmision = if(binding.sdfswitchFinalizada.isChecked) binding.sdfswitchFinalizada.isChecked else false,
                 notas = binding.sdfetNotas.text.toString(),
                 imagenUrl = imagenSeleccionadaBytes ?: it1.imagenUrl,  // ← mantiene imagen original si no se cambia
                 fechaCreacion = it1.fechaCreacion

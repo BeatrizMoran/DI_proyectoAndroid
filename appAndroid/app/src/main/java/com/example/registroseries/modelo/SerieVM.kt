@@ -26,6 +26,12 @@ class SerieVM(private val miRepositorio: Repositorio): ViewModel(){
     fun borrarSerie(miSerie: Serie)=viewModelScope.launch {
         miRepositorio.borrarSerie(miSerie)
     }
+
+    fun obtenerSeriePorId(id: Int): Serie? {
+        return listaSeries.value?.find { it.id == id }
+    }
+
+
 }
 
 

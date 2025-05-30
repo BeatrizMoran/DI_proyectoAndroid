@@ -22,15 +22,6 @@
             android:gravity="center_vertical"
             android:layout_marginBottom="16dp">
 
-            <!-- Botón Volver alineado a la izquierda -->
-            <Button
-                android:id="@+id/sdfbVolver"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:drawableLeft="@drawable/ic_volver"
-                android:padding="9dp"
-                android:text=" "
-                app:backgroundTint="@color/grisClaro" />
 
             <!-- Espaciador flexible -->
             <View
@@ -222,6 +213,12 @@
                 android:layout_marginTop="12dp"
                 app:thumbTint="@color/rojo"
                 app:trackTint="@color/rojo" />
+            <CheckBox
+                android:id="@+id/scfcbFechaEmision"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hay fecha de emision nueva temporada"
+                android:visibility="gone"/>
 
             <EditText
                 android:id="@+id/etFechaEmision"

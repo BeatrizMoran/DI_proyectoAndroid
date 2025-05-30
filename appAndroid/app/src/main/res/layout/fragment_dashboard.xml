@@ -36,6 +36,7 @@
                 <Button
                     android:id="@+id/btnAddSerie"
                     android:text="Añadir"
+                    android:backgroundTint="@color/rojo"
                     android:layout_marginTop="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -54,6 +55,28 @@
             android:textStyle="bold"
             android:gravity="center_horizontal"
             android:paddingTop="30dp"/>
+
+
+            <EditText
+                android:id="@+id/dfSinSeries"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" - No hay series registradas"
+                android:textSize="17sp"
+                android:textColor="@android:color/black"
+                android:layout_gravity="center_horizontal"
+                android:paddingBottom="8dp"
+                android:layout_marginVertical="15dp"
+                android:visibility="gone"
+                android:backgroundTint="@color/rojo"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:cursorVisible="false"
+                android:longClickable="false"
+                android:inputType="none"
+                android:layout_marginTop="20dp"
+                />
+
         <LinearLayout
             android:id="@+id/contenedorSeries"
             android:layout_width="match_parent"
@@ -137,6 +160,7 @@
                     android:text="Ver lista series"
                     android:layout_gravity="center"
                     app:tabGravity="center"
+                    android:backgroundTint="@color/rojo"
                     android:layout_marginHorizontal="20dp"/>
             </LinearLayout>
 

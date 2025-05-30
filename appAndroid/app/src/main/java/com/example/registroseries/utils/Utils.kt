@@ -19,6 +19,18 @@ fun formatearFecha(date: Date): String {
     return formatter.format(date)
 }
 
+
+fun parsearFecha(fechaTexto: String): Date? {
+    return try {
+        val formato = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        formato.parse(fechaTexto)
+    } catch (e: Exception) {
+        null
+    }
+}
+
+
+
 fun mostrarCalendarioConFecha(
     context: Context,
     editText: EditText,

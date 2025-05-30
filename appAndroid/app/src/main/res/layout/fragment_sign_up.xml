@@ -8,7 +8,8 @@
 
     <LinearLayout
         android:id="@+id/formContainer"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="50dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center_horizontal"
@@ -17,7 +18,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <EditText
+        <TextView
+            android:id="@+id/suftvTitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="20dp"
+            android:gravity="center_horizontal"
+            android:text="Crear cuenta" />
+
+        <!--<EditText
             android:id="@+id/suftvNombre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -28,9 +39,26 @@
             android:hint="@string/nombre"
             android:inputType="text"
             android:layout_marginTop="16dp"
-            android:tag="Nombre" />
+            android:tag="Nombre" />-->
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:layout_marginBottom="25dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxStrokeColor="@color/rojo"
+            app:boxBackgroundMode="outline"
+            android:hint="Nombre">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/suftvNombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+       <!-- <EditText
             android:id="@+id/suftvApellidos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -40,9 +68,26 @@
             android:hint="@string/apellidos"
             android:inputType="text"
             android:layout_marginTop="16dp"
-            android:tag="Apellidos"/>
+            android:tag="Apellidos"/>-->
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:layout_marginBottom="25dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxStrokeColor="@color/rojo"
+            app:boxBackgroundMode="outline"
+            android:hint="Apellidos">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/suftvApellidos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--<EditText
             android:id="@+id/suftvEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -52,9 +97,27 @@
             android:hint="Email"
             android:inputType="textEmailAddress"
             android:layout_marginTop="16dp"
-            android:tag="Email"/>
+            android:tag="Email"/>-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:layout_marginBottom="25dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxStrokeColor="@color/rojo"
+            app:boxBackgroundMode="outline"
+            android:hint="Email">
 
-        <EditText
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/suftvEmail"
+                android:inputType="textEmailAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <!--<EditText
             android:id="@+id/suftvPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -64,9 +127,27 @@
             android:hint="@string/contrase_a"
             android:inputType="textPassword"
             android:layout_marginTop="16dp"
-            android:tag="Contraseña"/>
+            android:tag="Contraseña"/>-->
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:layout_marginBottom="25dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxStrokeColor="@color/rojo"
+            app:boxBackgroundMode="outline"
+            android:hint="Contraseña">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/suftvPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--<EditText
             android:id="@+id/suftvPassword2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -76,7 +157,25 @@
             android:hint="@string/repite_la_contrase_a"
             android:inputType="textPassword"
             android:layout_marginTop="16dp"
-            android:tag="Contraseña"/>
+            android:tag="Contraseña"/>-->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:layout_marginBottom="25dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxStrokeColor="@color/rojo"
+            app:boxBackgroundMode="outline"
+            android:hint="Repite la contraseña">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/suftvPassword2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/suftvIrLogin"

@@ -5,5 +5,10 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.RegistroSeries" parent="Base.Theme.RegistroSeries" />
+    <style name="Theme.RegistroSeries" parent="Base.Theme.RegistroSeries" >
+    <!-- Fuerza fondo blanco -->
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="backgroundColor">@android:color/white</item>
+    </style>
+
 </resources>

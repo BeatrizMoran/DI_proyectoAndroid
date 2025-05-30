@@ -3,6 +3,7 @@ package com.example.registroseries
 import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Patterns
 import android.util.TypedValue
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -42,27 +43,24 @@ class SignUpFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.sufbSignUp.setOnClickListener {
-            AlertDialog.Builder(requireContext())
-                .setTitle("Confirmación")
-                .setMessage("Al crear una nueva cuenta, se eliminarán todos los datos asociados a la cuenta anterior (si existe). ¿Deseas continuar?")
-                .setPositiveButton("Aceptar") { dialog, _ -> dialog.dismiss()
-                    val usuario = validarDatos()
+            val usuario = validarDatos()
 
-                    if (usuario != null) {
+            if (usuario != null) {
+                AlertDialog.Builder(requireContext())
+                    .setTitle("Confirmación")
+                    .setMessage("Al crear una nueva cuenta, se eliminarán todos los datos asociados a la cuenta anterior (si existe). ¿Deseas continuar?")
+                    .setPositiveButton("Aceptar") { dialog, _ -> dialog.dismiss()
                         (activity as MainActivity).signUpVM.registrarUsuario(usuario)
                         mostrarMensajePersonalizado(requireContext(),
                             "Usuario registrado correctamente. Inicia sesión",
                             R.layout.custom_toast_info)
-
-
                         // Navega al siguiente fragmento
                         findNavController().navigate(R.id.action_signUpFragment_to_loginFragment)
                     }
-                }
-                .setNegativeButton("Cancelar") { dialog, _ -> dialog.dismiss()
-                }
-                .show()
-
+                    .setNegativeButton("Cancelar") { dialog, _ -> dialog.dismiss()
+                    }
+                    .show()
+            }
         }
 
         binding.suftvIrLogin.setOnClickListener {
@@ -82,15 +80,40 @@ class SignUpFragment : Fragment() {
         val errores = StringBuilder()
         var hayErrores = false
 
-        // Validación de campos vacíos
+        val regexSinNumeros = Regex("^[^\\d]*\$")
+
         for ((editText, nombreCampo) in campos) {
-            if (editText.text.toString().isBlank()) {
-                errores.append("El campo: $nombreCampo es obligatorio\n")
+            val texto = editText.text.toString().trim()
+
+            // Validación de campos vacíos
+            if (texto.isEmpty()) {
+                errores.append("El campo \"$nombreCampo\" es obligatorio.\n")
                 editText.setBackgroundColor(Color.parseColor("#FFCDD2"))
                 hayErrores = true
-            } else {
+            } else if((nombreCampo == "Nombre" || nombreCampo == "Apellidos") && !regexSinNumeros.matches(texto)) {
+                editText.setBackgroundColor(Color.TRANSPARENT) // Restaurar fondo si no hay error
+                // Validar que nombre y apellidos no contengan números
+
+                    errores.append("El campo \"$nombreCampo\" no debe contener números.\n")
+                    editText.setBackgroundColor(Color.parseColor("#FFCDD2"))
+                    hayErrores = true
+
+            }else{
                 editText.setBackgroundColor(Color.TRANSPARENT)
             }
+        }
+
+
+
+        val esEmailValido = Patterns.EMAIL_ADDRESS.matcher(binding.suftvEmail.text.toString()).matches()
+
+        if (!esEmailValido) {
+            errores.append("El campo: email no tiene un formato adecuado\n")
+            binding.suftvEmail.setBackgroundColor(Color.parseColor("#FFCDD2"))
+            hayErrores = true
+        }else{
+            binding.suftvEmail.setBackgroundColor(Color.TRANSPARENT)
+
         }
 
         // Validación de contraseñas

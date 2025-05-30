@@ -5,18 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="24dp">
+
     <TextView
         android:id="@+id/scftvTitulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Iniciar sesión"
+        android:layout_marginTop="40dp"
+        android:text="@string/iniciar_sesi_n"
+        android:textColor="@android:color/black"
         android:textSize="25sp"
         android:textStyle="bold"
-        android:layout_marginTop="40dp"
-        android:textColor="@android:color/black"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/loginContainer"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <LinearLayout
@@ -33,28 +35,42 @@
         app:layout_constraintEnd_toEndOf="parent">
 
 
-
-        <EditText
-            android:id="@+id/lftvEmail"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="48dp"
-            android:hint="@string/usuario"
-            android:inputType="textEmailAddress"
-            android:backgroundTint="@color/rojo"
-            android:padding="12dp"
-            android:layout_marginBottom="25dp" />
+            android:layout_marginBottom="25dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxStrokeColor="@color/rojo"
+            app:boxBackgroundMode="outline"
+            android:hint="Email">
 
-        <EditText
-            android:id="@+id/lftvPassword"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/lftvEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="48dp"
-            android:hint="@string/contrase_a"
-            android:inputType="textPassword"
-            android:backgroundTint="@color/rojo"
-            android:padding="12dp"
-            android:layout_marginBottom="25dp" />
+            android:layout_marginBottom="25dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxStrokeColor="@color/rojo"
+            app:boxBackgroundMode="outline"
+            android:hint="Contraseña">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/lftvPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/lftvIrSignUp"

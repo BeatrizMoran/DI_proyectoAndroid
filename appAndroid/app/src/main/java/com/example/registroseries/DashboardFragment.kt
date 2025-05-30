@@ -52,12 +52,16 @@ class DashboardFragment : Fragment() {
 
         progressBar2.visibility = View.VISIBLE
 
-        val contenedorSeries = binding.contenedorSeries  // ID del LinearLayout en el XML
+        val contenedorSeries = binding.contenedorSeries
 
         (activity as MainActivity).serieViewModel.listaSeries.observe(viewLifecycleOwner) { lista ->
+
             progressBar2.visibility = View.GONE
 
             val ultimas3Series = lista.sortedByDescending { it.fechaCreacion }.take(3)
+
+            binding.dfSinSeries.visibility = if (ultimas3Series.isEmpty()) View.VISIBLE else View.GONE
+
 
             contenedorSeries.removeAllViews() // Limpiar por si acaso
 
