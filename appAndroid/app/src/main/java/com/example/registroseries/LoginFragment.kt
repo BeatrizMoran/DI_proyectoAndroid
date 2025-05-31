@@ -7,14 +7,10 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
-import androidx.core.view.isNotEmpty
+
 import androidx.navigation.fragment.findNavController
-import com.example.registroseries.databinding.FragmentFirstBinding
 import com.example.registroseries.databinding.FragmentLoginBinding
 import com.example.registroseries.utils.mostrarMensajePersonalizado
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class LoginFragment : Fragment() {

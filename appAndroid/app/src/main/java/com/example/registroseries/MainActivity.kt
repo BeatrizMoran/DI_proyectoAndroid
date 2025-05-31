@@ -22,7 +22,6 @@ import com.example.registroseries.modelo.SerieVM
 import com.example.registroseries.modelo.SerieViewModelFactory
 import com.example.registroseries.modelo.SignUpVM
 import com.example.registroseries.modelo.SignUpViewModelFactory
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 

@@ -1,8 +1,6 @@
 package com.example.registroseries
 
-import android.app.DatePickerDialog
 import android.graphics.Color
-import android.icu.text.SimpleDateFormat
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
