@@ -176,12 +176,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Hay fecha de emision nueva temporada" />
+
+        <!-- Desactiva la edición para abrir el calendario al primer clic -->
         <EditText
             android:id="@+id/etFechaEmision"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Fecha de emisión"
-            android:inputType="date"
+            android:focusable="false"
+            android:clickable="true"
+            android:inputType="none"
             android:visibility="gone" />
 
 

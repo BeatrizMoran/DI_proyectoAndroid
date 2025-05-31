@@ -150,6 +150,8 @@ class SignUpFragment : Fragment() {
         menu.findItem(R.id.action_cargar_datos_formulario)?.isVisible = false
         menu.findItem(R.id.action_limpiar_campos_formulario)?.isVisible = false
         menu.findItem(R.id.action_logout)?.isVisible = false
+        menu.findItem(R.id.action_cambiar_vista)?.isVisible = false
+
 
     }
 

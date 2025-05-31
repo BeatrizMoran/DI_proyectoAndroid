@@ -80,10 +80,6 @@ class SeriesListFragment : Fragment() {
 
             }
         }
-
-
-
-
     }
 
     fun mostrarSeries(){

@@ -118,6 +118,7 @@ class DashboardFragment : Fragment() {
         var numeroSeries = lista.size
 
         val seriesVistas = lista.count { it.estadoVisualizacion.equals("Viendo", ignoreCase = true) }
+        val seriesTerminadas = lista.count { it.estadoVisualizacion.equals("Terminada", ignoreCase = true) }
         val seriesPendientes = lista.count { it.estadoVisualizacion.equals("Pendiente", ignoreCase = true) }
         val seriesAbandonadas = lista.count { it.estadoVisualizacion.equals("Abandonadas", ignoreCase = true) }
 
@@ -126,6 +127,8 @@ class DashboardFragment : Fragment() {
         binding.tvSeriesTotales.text = "Series totales: $numeroSeries"
         binding.tvSeriesPendientes.text = "Series pendientes: $seriesPendientes"
         binding.tvSeriesVistas.text = "Series vistas: $seriesVistas"
+        binding.tvSeriesTerminadas.text = "Series Terminadas: $seriesTerminadas"
+
         binding.tvSeriesAbandonadas.text = "series abandonadas: $seriesAbandonadas"
     }
 

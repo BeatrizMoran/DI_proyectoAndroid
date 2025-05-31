@@ -15,6 +15,7 @@
         android:textColor="@android:color/black"
         android:textSize="25sp"
         android:textStyle="bold"
+        android:layout_marginBottom="40dp"
         app:layout_constraintBottom_toTopOf="@+id/loginContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
